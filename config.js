@@ -13,9 +13,10 @@ const CONFIG = (() => {
   const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
   const isDev = isLocal || hostname.includes('vercel.app');
 
-  // 프로덕션 Railway 백엔드 URL
-  const PROD_API_URL = 'https://kohipstech.com';
-  // 로컬 개발 백엔드 URL (Railway 로컬 또는 별도 dev 서버)
+  // 프로덕션: Vercel 프록시를 통해 Railway로 전달 (상대경로 사용)
+  // vercel.json rewrites: /api/* → https://kohipstech-production.up.railway.app/api/*
+  const PROD_API_URL = '';
+  // 로컬 개발: Railway 직접 호출 또는 로컬 백엔드
   const DEV_API_URL = 'http://localhost:3000';
 
   return Object.freeze({
