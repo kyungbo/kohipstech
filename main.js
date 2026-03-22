@@ -1,3 +1,8 @@
+// ===== Analytics Helper =====
+function gaEvent(eventName, params) {
+  if (typeof gtag === 'function') gtag('event', eventName, params);
+}
+
 // ===== Loader =====
 let progress = 0;
 const fill = document.getElementById('loaderFill');
@@ -121,6 +126,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
       sideDots.forEach(d => d.classList.remove('active'));
       const target = document.querySelector(`.side-dot[data-target="${entry.target.id}"]`);
       if (target) target.classList.add('active');
+      gaEvent('section_view', { section_id: entry.target.id });
     }
   });
 }, { threshold: 0.35 });
@@ -280,6 +286,7 @@ window.handleSubmit = async function(e) {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
+    gaEvent('contact_form_submit', { has_file: !!(fileInput && fileInput.files.length > 0) });
     btn.textContent = '전송 완료!';
     btn.style.background = '#10b981';
     btn.style.opacity = '1';
@@ -312,6 +319,7 @@ window.handleSubmit = async function(e) {
       return;
     }
 
+    gaEvent('contact_form_error', { error: error.message });
     btn.textContent = '전송 실패 - 다시 시도해주세요';
     btn.style.background = '#e63946';
     btn.style.opacity = '1';
@@ -341,5 +349,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth' });
     }
+  });
+});
+
+// ===== Analytics: CTA & Phone Click Tracking =====
+document.querySelectorAll('.btn-primary, .btn-outline, .magnetic').forEach(btn => {
+  btn.addEventListener('click', () => {
+    gaEvent('cta_click', { label: btn.textContent.trim().slice(0, 50) });
+  });
+});
+
+document.querySelectorAll('a[href^="tel:"], .nav-phone').forEach(el => {
+  el.addEventListener('click', () => {
+    gaEvent('phone_click', { phone: '053-857-3541' });
   });
 });
