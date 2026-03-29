@@ -840,18 +840,70 @@ section { position: relative; overflow: hidden; }
 
 .contact-map {
   margin-top: 24px;
-  border-radius: 12px; overflow: hidden;
+}
+.google-map-iframe {
+  display: block;
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.06);
 }
-.map-placeholder {
-  height: 200px;
+.map-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+  flex: 1;
+  justify-content: center;
+  min-width: 120px;
+}
+.map-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.map-btn-google { background: #4285f4; color: #fff; }
+.map-btn-naver  { background: #03c75a; color: #fff; }
+.map-btn-kakao  { background: #fee500; color: #3c1e1e; }
+
+/* 언어 전환 로딩 스피너 */
+.lang-btn.loading { opacity: 0.6; pointer-events: none; }
+.lang-btn.loading::after {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: 4px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 번역 중 페이지 오버레이 */
+.translate-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,18,32,0.65);
+  backdrop-filter: blur(4px);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 8px; color: #3a4a60;
-  background: rgba(255,255,255,0.02);
+  z-index: 9999;
+  gap: 16px;
+  color: #fff;
 }
-.map-placeholder p { font-size: 0.82rem; color: #8892a0; }
-.map-placeholder span { font-size: 0.7rem; color: #4a5568; }
+.translate-overlay .spinner {
+  width: 36px; height: 36px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: #3A7BD5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.translate-overlay p { font-size: 0.9rem; opacity: 0.8; }
 
 /* ===== FOOTER ===== */
 footer {
@@ -905,6 +957,9 @@ footer {
   .news-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .section-title { font-size: 1.8rem; }
+  .map-actions { flex-direction: column; }
+  .map-btn { min-width: unset; }
+  .google-map-iframe { height: 220px; }
   .side-dots { display: none; }
   .hero-arrow { display: none; }
   .numbers-grid { grid-template-columns: 1fr 1fr; }

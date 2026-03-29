@@ -6,6 +6,10 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/api/translate",
+      "destination": "/api/translate"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://kohipstech-production.up.railway.app/api/:path*"
     }

@@ -364,3 +364,187 @@ document.querySelectorAll('a[href^="tel:"], .nav-phone').forEach(el => {
     gaEvent('phone_click', { phone: '053-857-3541' });
   });
 });
+
+// ===== Language Toggle (Claude API Translation) =====
+(function () {
+  const STORAGE_KEY = 'kohips_lang';
+  const CACHE_KEY   = 'kohips_en_cache';
+
+  // 번역 대상 선택자 — 네비, 히어로, 섹션 전체 텍스트 노드
+  const TRANSLATE_SELECTOR = [
+    'nav .nav-links a',
+    '.hero-eyebrow', '.hero-title', '.hero-sub', '.hero-cta',
+    '.section-label', '.section-title', '.section-sub',
+    '.about-desc', '.feature-card', '.product-card',
+    '.contact-info-item p', '.contact-info-item strong',
+    '.footer-desc', '.footer-col h4', '.footer-col a',
+    'h1,h2,h3,h4', 'p', 'li', 'button:not(.lang-btn)',
+    'label', 'th', 'td', '.map-btn'
+  ].join(',');
+
+  let currentLang = localStorage.getItem(STORAGE_KEY) || 'ko';
+  let enCache = null;  // { selector_index_key: translated_text }
+
+  try { enCache = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(_) {}
+
+  // 원본 한국어 텍스트 스냅샷 (최초 1회)
+  let koSnapshot = null;
+
+  function buildSnapshot() {
+    const nodes = document.querySelectorAll(TRANSLATE_SELECTOR);
+    const snap = {};
+    nodes.forEach((el, i) => {
+      const key = getKey(el, i);
+      // 직접 자식 텍스트만 (자식 엘리먼트 텍스트 제외)
+      const text = directText(el);
+      if (text.trim()) snap[key] = text;
+    });
+    return snap;
+  }
+
+  function directText(el) {
+    let t = '';
+    el.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) t += n.textContent; });
+    return t;
+  }
+
+  function getKey(el, i) {
+    return el.id || (el.className + '_' + i);
+  }
+
+  function applyTexts(textMap) {
+    const nodes = document.querySelectorAll(TRANSLATE_SELECTOR);
+    nodes.forEach((el, i) => {
+      const key = getKey(el, i);
+      if (textMap[key]) {
+        // 텍스트 노드만 교체 (자식 태그 유지)
+        el.childNodes.forEach(n => {
+          if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
+            n.textContent = textMap[key];
+          }
+        });
+      }
+    });
+  }
+
+  async function translateToEnglish() {
+    // 캐시 있으면 즉시 사용
+    if (enCache && Object.keys(enCache).length > 0) {
+      applyTexts(enCache);
+      return;
+    }
+
+    // 스냅샷 빌드
+    if (!koSnapshot) koSnapshot = buildSnapshot();
+
+    // 번역할 텍스트만 추출
+    const entries = Object.entries(koSnapshot);
+    if (!entries.length) return;
+
+    // Claude API 호출 (/api/translate — Railway 백엔드로 프록시)
+    const response = await fetch('/api/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        texts: Object.fromEntries(entries),
+        targetLang: 'en'
+      })
+    });
+
+    if (!response.ok) throw new Error('Translation API error: ' + response.status);
+    const data = await response.json();
+
+    enCache = data.translations;
+    localStorage.setItem(CACHE_KEY, JSON.stringify(enCache));
+    applyTexts(enCache);
+  }
+
+  function restoreKorean() {
+    if (!koSnapshot) return;
+    applyTexts(koSnapshot);
+  }
+
+  async function switchLang(lang) {
+    if (lang === currentLang) return;
+
+    // 맵 버튼 레이블도 전환
+    const mapLabels = {
+      ko: { google: 'Google 경로안내', naver: '네이버 경로안내', kakao: '카카오 경로안내' },
+      en: { google: 'Google Directions', naver: 'Naver Directions', kakao: 'Kakao Directions' }
+    };
+
+    // UI 업데이트
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    if (lang === 'ko') {
+      restoreKorean();
+      document.documentElement.lang = 'ko';
+      currentLang = 'ko';
+      localStorage.setItem(STORAGE_KEY, 'ko');
+      gaEvent('language_switch', { to: 'ko' });
+      return;
+    }
+
+    // 영어 전환 — 오버레이 표시
+    if (!koSnapshot) koSnapshot = buildSnapshot();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'translate-overlay';
+    overlay.innerHTML = '<div class="spinner"></div><p>번역 중... Translating...</p>';
+    document.body.appendChild(overlay);
+
+    // 버튼 로딩 상태
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.add('loading'));
+
+    try {
+      await translateToEnglish();
+
+      // 맵 버튼 레이블 수동 교체 (번역 API에 의존하지 않음)
+      const mapBtns = document.querySelectorAll('.map-btn[data-lang-key]');
+      mapBtns.forEach(btn => {
+        const key = btn.dataset.langKey;
+        if (mapLabels[lang] && mapLabels[lang][key.replace('map_', '')]) {
+          const icon = btn.querySelector('svg');
+          btn.textContent = mapLabels[lang][key.replace('map_', '')];
+          if (icon) btn.prepend(icon);
+        }
+      });
+
+      document.documentElement.lang = 'en';
+      currentLang = 'en';
+      localStorage.setItem(STORAGE_KEY, 'en');
+      gaEvent('language_switch', { to: 'en' });
+    } catch (err) {
+      console.error('[KOHIPS] Translation failed:', err);
+      // 실패 시 조용히 원복
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === 'ko');
+      });
+    } finally {
+      overlay.remove();
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('loading'));
+    }
+  }
+
+  // 초기화: 저장된 언어 복원
+  document.addEventListener('DOMContentLoaded', () => {
+    // 스냅샷은 로드 직후 찍어야 한국어 원본 보존
+    koSnapshot = buildSnapshot();
+
+    document.querySelectorAll('#langSwitch .lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchLang(btn.dataset.lang));
+    });
+
+    if (currentLang === 'en') {
+      // 저장된 영어 캐시가 있으면 바로 적용
+      if (enCache) {
+        document.querySelectorAll('.lang-btn').forEach(b =>
+          b.classList.toggle('active', b.dataset.lang === 'en'));
+        applyTexts(enCache);
+        document.documentElement.lang = 'en';
+      }
+    }
+  });
+})();
