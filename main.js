@@ -3,6 +3,85 @@ function gaEvent(eventName, params) {
   if (typeof gtag === 'function') gtag('event', eventName, params);
 }
 
+// ===== Enhanced GA4: Virtual Pageview for SPA Sections =====
+function gaPageView(sectionId) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'page_view', {
+      page_title: sectionTitle(sectionId),
+      page_location: window.location.origin + '/#' + sectionId,
+      page_path: '/#' + sectionId
+    });
+  }
+}
+
+function sectionTitle(id) {
+  const titles = {
+    hero: '코힙스테크 | 메인',
+    services: '코힙스테크 | 서비스',
+    numbers: '코힙스테크 | 실적',
+    about: '코힙스테크 | 회사소개',
+    hip: '코힙스테크 | HIP 기술',
+    products: '코힙스테크 | 생산품목',
+    equipment: '코힙스테크 | 보유장비',
+    atomize: '코힙스테크 | 가스아토마이즈',
+    news: '코힙스테크 | 소식',
+    contact: '코힙스테크 | 문의/오시는길'
+  };
+  return titles[id] || '코힙스테크 | ' + id;
+}
+
+// ===== Enhanced GA4: Scroll Depth Tracking =====
+(function() {
+  const milestones = [25, 50, 75, 100];
+  const fired = new Set();
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const pct = Math.round((scrollTop / docHeight) * 100);
+    milestones.forEach(m => {
+      if (pct >= m && !fired.has(m)) {
+        fired.add(m);
+        gaEvent('scroll_depth', { percent: m });
+      }
+    });
+  });
+})();
+
+// ===== Enhanced GA4: Section Dwell Time =====
+(function() {
+  let currentSection = null;
+  let enterTime = null;
+
+  window._trackSectionEnter = function(sectionId) {
+    // 이전 섹션 체류시간 기록
+    if (currentSection && enterTime) {
+      const dwellSec = Math.round((Date.now() - enterTime) / 1000);
+      if (dwellSec >= 2) { // 2초 이상만 기록
+        gaEvent('section_dwell', {
+          section_id: currentSection,
+          dwell_seconds: dwellSec
+        });
+      }
+    }
+    currentSection = sectionId;
+    enterTime = Date.now();
+  };
+
+  // 페이지 이탈 시 마지막 섹션 체류시간 기록
+  window.addEventListener('beforeunload', () => {
+    if (currentSection && enterTime) {
+      const dwellSec = Math.round((Date.now() - enterTime) / 1000);
+      if (dwellSec >= 2) {
+        gaEvent('section_dwell', {
+          section_id: currentSection,
+          dwell_seconds: dwellSec
+        });
+      }
+    }
+  });
+})();
+
 // ===== Loader =====
 let progress = 0;
 const fill = document.getElementById('loaderFill');
@@ -116,17 +195,28 @@ const counterObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.number-value[data-count]').forEach(el => counterObserver.observe(el));
 
-// ===== Side Dots =====
+// ===== Side Dots + Section View Tracking (Enhanced) =====
 const sections = document.querySelectorAll('section[id]');
 const sideDots = document.querySelectorAll('.side-dot');
+let lastTrackedSection = null;
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      const sectionId = entry.target.id;
+
+      // Side dot UI
       sideDots.forEach(d => d.classList.remove('active'));
-      const target = document.querySelector(`.side-dot[data-target="${entry.target.id}"]`);
+      const target = document.querySelector(`.side-dot[data-target="${sectionId}"]`);
       if (target) target.classList.add('active');
-      gaEvent('section_view', { section_id: entry.target.id });
+
+      // GA4: section_view + virtual pageview (중복 방지)
+      if (sectionId !== lastTrackedSection) {
+        lastTrackedSection = sectionId;
+        gaEvent('section_view', { section_id: sectionId });
+        gaPageView(sectionId);
+        if (window._trackSectionEnter) window._trackSectionEnter(sectionId);
+      }
     }
   });
 }, { threshold: 0.35 });
@@ -238,6 +328,32 @@ if (fileUpload && fileInput) {
   });
 }
 
+// ===== Google Sheets Webhook (문의 기록 자동 저장) =====
+async function logToGoogleSheets(formData) {
+  const SHEETS_URL = CONFIG.GOOGLE_SHEETS_WEBHOOK;
+  if (!SHEETS_URL) return; // 설정 안 되어 있으면 skip
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors', // Google Apps Script은 CORS 제한
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        timestamp: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
+        company: formData.company,
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message,
+        source: window.location.href,
+        userAgent: navigator.userAgent.slice(0, 100)
+      })
+    });
+  } catch (err) {
+    console.warn('[KOHIPS] Google Sheets logging failed (non-blocking):', err.message);
+  }
+}
+
 // ===== Form Submit =====
 window.handleSubmit = async function(e) {
   e.preventDefault();
@@ -271,6 +387,9 @@ window.handleSubmit = async function(e) {
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
+  // Google Sheets에 기록 (비동기, 실패해도 폼 전송에 영향 없음)
+  logToGoogleSheets(formData);
+
   try {
     const apiUrl = CONFIG.apiUrl(CONFIG.CONTACT_ENDPOINT);
     const headers = {};
@@ -286,7 +405,17 @@ window.handleSubmit = async function(e) {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    gaEvent('contact_form_submit', { has_file: !!(fileInput && fileInput.files.length > 0) });
+    // GA4: 전환 추적 (문의 폼 전송 성공)
+    gaEvent('contact_form_submit', {
+      has_file: !!(fileInput && fileInput.files.length > 0),
+      company: formData.company,
+      contact_email: formData.email
+    });
+    gaEvent('generate_lead', {
+      currency: 'KRW',
+      value: 1
+    });
+
     btn.textContent = '전송 완료!';
     btn.style.background = '#10b981';
     btn.style.opacity = '1';
@@ -361,7 +490,85 @@ document.querySelectorAll('.btn-primary, .btn-outline, .magnetic').forEach(btn =
 
 document.querySelectorAll('a[href^="tel:"], .nav-phone').forEach(el => {
   el.addEventListener('click', () => {
-    gaEvent('phone_click', { phone: '053-857-3541' });
+    gaEvent('phone_click', { phone: CONFIG.COMPANY.tel });
+  });
+});
+
+// ===== Analytics: Map Direction Button Clicks =====
+document.querySelectorAll('.map-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    let provider = 'unknown';
+    if (btn.classList.contains('map-btn-google')) provider = 'google';
+    else if (btn.classList.contains('map-btn-naver')) provider = 'naver';
+    else if (btn.classList.contains('map-btn-kakao')) provider = 'kakao';
+
+    gaEvent('map_direction_click', {
+      provider: provider,
+      destination: CONFIG.COMPANY.address
+    });
+  });
+});
+
+// ===== Analytics: Map Iframe Visibility (지도 확인 추적) =====
+(function() {
+  const mapIframe = document.querySelector('.google-map-iframe');
+  if (!mapIframe) return;
+
+  let mapViewed = false;
+  const mapObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !mapViewed) {
+        mapViewed = true;
+        gaEvent('map_view', { map_provider: 'google_embed' });
+        mapObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  mapObserver.observe(mapIframe);
+})();
+
+// ===== Analytics: Contact Section Engagement =====
+(function() {
+  const contactSection = document.getElementById('contact');
+  if (!contactSection) return;
+
+  let contactViewed = false;
+  const contactObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !contactViewed) {
+        contactViewed = true;
+        gaEvent('contact_section_view', {
+          has_pending_trips: false, // website context
+          referrer: document.referrer || 'direct'
+        });
+        contactObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  contactObserver.observe(contactSection);
+})();
+
+// ===== Analytics: Form Field Interaction =====
+(function() {
+  const contactForm = document.querySelector('#contact form');
+  if (!contactForm) return;
+
+  let formStarted = false;
+  contactForm.addEventListener('focusin', () => {
+    if (!formStarted) {
+      formStarted = true;
+      gaEvent('form_start', { form_name: 'contact' });
+    }
+  });
+})();
+
+// ===== Analytics: Outbound Link Tracking =====
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+  link.addEventListener('click', () => {
+    gaEvent('outbound_click', {
+      url: link.href,
+      label: link.textContent.trim().slice(0, 50)
+    });
   });
 });
 

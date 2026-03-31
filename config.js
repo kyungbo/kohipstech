@@ -28,6 +28,10 @@ const CONFIG = (() => {
     API_URL: isLocal ? DEV_API_URL : PROD_API_URL,
     CONTACT_ENDPOINT: '/api/contact',
 
+    // Google Sheets Webhook (문의 기록 자동 저장)
+    // Google Apps Script 웹 앱 URL을 여기에 입력하세요
+    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbyMPUyYs0v0_W131I7w_J4EJrpz0UUHpGUHYFTZN68u-FcoU1mn4PQ_niGXDomw0VxEuA/exec',
+
     // 사이트
     SITE_URL: isLocal ? `http://localhost:${window.location.port || 8080}` : 'https://kohipstech.com',
     SITE_NAME: '코힙스테크 KOHIPS TECH',
