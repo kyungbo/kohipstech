@@ -45,19 +45,38 @@ export default async function handler(req) {
   const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK;
   if (sheetsUrl) {
     try {
-      await fetch(sheetsUrl, {
+      const sheetsPayload = JSON.stringify({
+        timestamp,
+        company: company || '',
+        name,
+        phone,
+        email,
+        message,
+        source: req.headers.get('referer') || 'direct'
+      });
+
+      // Google Apps Script는 302 리다이렉트를 반환함
+      // fetch의 redirect: 'follow'가 POST→GET으로 변환하므로 수동 처리
+      let sheetsRes = await fetch(sheetsUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          timestamp,
-          company: company || '',
-          name,
-          phone,
-          email,
-          message,
-          source: req.headers.get('referer') || 'direct'
-        })
+        body: sheetsPayload,
+        redirect: 'manual'
       });
+
+      // 302/307 리다이렉트 시 새 URL로 POST 재전송
+      if (sheetsRes.status === 302 || sheetsRes.status === 307) {
+        const redirectUrl = sheetsRes.headers.get('location');
+        if (redirectUrl) {
+          sheetsRes = await fetch(redirectUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: sheetsPayload,
+            redirect: 'follow'
+          });
+        }
+      }
+
       results.sheets = 'ok';
     } catch (err) {
       console.error('[contact] Sheets error:', err.message);

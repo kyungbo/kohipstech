@@ -387,8 +387,7 @@ window.handleSubmit = async function(e) {
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
-  // Google Sheets에 기록 (비동기, 실패해도 폼 전송에 영향 없음)
-  logToGoogleSheets(formData);
+  // Google Sheets 기록은 서버(api/contact.js)에서 처리
 
   try {
     const apiUrl = CONFIG.apiUrl(CONFIG.CONTACT_ENDPOINT);
