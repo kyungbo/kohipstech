@@ -573,20 +573,24 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
 // ===== Language Toggle (Static i18n via i18n.js) =====
 (function () {
   const STORAGE_KEY = 'kohips_lang';
+
+  // 이전 API 기반 번역 캐시 정리
+  localStorage.removeItem('kohips_en_cache');
+
   let currentLang = localStorage.getItem(STORAGE_KEY) || 'ko';
 
   function applyLanguage(lang) {
-    const texts = I18N[lang];
+    var texts = I18N[lang];
     if (!texts) return;
 
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
       if (texts[key] == null) return;
       if (el.children.length === 0) {
         el.textContent = texts[key];
       } else {
-        let replaced = false;
-        el.childNodes.forEach(node => {
+        var replaced = false;
+        el.childNodes.forEach(function(node) {
           if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
             if (!replaced) { node.textContent = texts[key] + ' '; replaced = true; }
           }
@@ -594,21 +598,21 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
       }
     });
 
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const key = el.getAttribute('data-i18n-html');
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-html');
       if (texts[key] != null) el.innerHTML = texts[key];
     });
 
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-placeholder');
       if (texts[key] != null) el.placeholder = texts[key];
     });
 
-    document.querySelectorAll('[data-i18n-suffix]').forEach(el => {
-      const key = el.getAttribute('data-i18n-suffix');
+    document.querySelectorAll('[data-i18n-suffix]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-suffix');
       if (texts[key] != null) {
         el.dataset.suffix = texts[key];
-        const count = el.dataset.count;
+        var count = el.dataset.count;
         if (count) el.textContent = (+count).toLocaleString() + texts[key];
       }
     });
@@ -621,7 +625,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
     currentLang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
 
@@ -629,17 +633,24 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
     gaEvent('language_switch', { to: lang });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('#langSwitch .lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => switchLang(btn.dataset.lang));
+  function init() {
+    document.querySelectorAll('#langSwitch .lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { switchLang(btn.dataset.lang); });
     });
 
     if (currentLang !== 'ko') {
-      document.querySelectorAll('.lang-btn').forEach(b =>
-        b.classList.toggle('active', b.dataset.lang === currentLang));
+      document.querySelectorAll('.lang-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.lang === currentLang);
+      });
       applyLanguage(currentLang);
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
   window.getI18nText = function(key) {
     return (I18N[currentLang] && I18N[currentLang][key]) || key;
