@@ -97,13 +97,13 @@
       <span>KOREA H.I.P TECHNOLOGY</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#hero" data-nav>홈</a></li>
-      <li><a href="#about" data-nav>회사소개</a></li>
-      <li><a href="#hip" data-nav>HIP 기술</a></li>
-      <li><a href="#products" data-nav>생산품목</a></li>
-      <li><a href="#equipment" data-nav>보유장비</a></li>
-      <li><a href="#atomize" data-nav>가스아토마이즈</a></li>
-      <li><a href="#contact" data-nav>문의</a></li>
+      <li><a href="#hero" data-nav data-i18n="nav_home">홈</a></li>
+      <li><a href="#about" data-nav data-i18n="nav_about">회사소개</a></li>
+      <li><a href="#hip" data-nav data-i18n="nav_hip">HIP 기술</a></li>
+      <li><a href="#products" data-nav data-i18n="nav_products">생산품목</a></li>
+      <li><a href="#equipment" data-nav data-i18n="nav_equipment">보유장비</a></li>
+      <li><a href="#atomize" data-nav data-i18n="nav_atomize">가스아토마이즈</a></li>
+      <li><a href="#contact" data-nav data-i18n="nav_contact">문의</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="langSwitch">
@@ -123,25 +123,25 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <nav>
-      <a href="#hero" onclick="closeMobile()">홈</a>
-      <a href="#about" onclick="closeMobile()">회사소개</a>
-      <a href="#hip" onclick="closeMobile()">HIP 기술</a>
-      <a href="#products" onclick="closeMobile()">생산품목</a>
-      <a href="#equipment" onclick="closeMobile()">보유장비</a>
-      <a href="#atomize" onclick="closeMobile()">가스아토마이즈</a>
-      <a href="#contact" onclick="closeMobile()">문의</a>
+      <a href="#hero" onclick="closeMobile()" data-i18n="nav_home">홈</a>
+      <a href="#about" onclick="closeMobile()" data-i18n="nav_about">회사소개</a>
+      <a href="#hip" onclick="closeMobile()" data-i18n="nav_hip">HIP 기술</a>
+      <a href="#products" onclick="closeMobile()" data-i18n="nav_products">생산품목</a>
+      <a href="#equipment" onclick="closeMobile()" data-i18n="nav_equipment">보유장비</a>
+      <a href="#atomize" onclick="closeMobile()" data-i18n="nav_atomize">가스아토마이즈</a>
+      <a href="#contact" onclick="closeMobile()" data-i18n="nav_contact">문의</a>
     </nav>
   </div>
 
   <!-- Side Dots -->
   <div class="side-dots" id="sideDots">
-    <div class="side-dot active" data-target="hero"><span class="side-dot-label">홈</span></div>
-    <div class="side-dot" data-target="about"><span class="side-dot-label">회사소개</span></div>
-    <div class="side-dot" data-target="hip"><span class="side-dot-label">HIP 기술</span></div>
-    <div class="side-dot" data-target="products"><span class="side-dot-label">생산품목</span></div>
-    <div class="side-dot" data-target="equipment"><span class="side-dot-label">보유장비</span></div>
-    <div class="side-dot" data-target="atomize"><span class="side-dot-label">가스아토마이즈</span></div>
-    <div class="side-dot" data-target="contact"><span class="side-dot-label">문의</span></div>
+    <div class="side-dot active" data-target="hero"><span class="side-dot-label" data-i18n="dot_home">홈</span></div>
+    <div class="side-dot" data-target="about"><span class="side-dot-label" data-i18n="dot_about">회사소개</span></div>
+    <div class="side-dot" data-target="hip"><span class="side-dot-label" data-i18n="dot_hip">HIP 기술</span></div>
+    <div class="side-dot" data-target="products"><span class="side-dot-label" data-i18n="dot_products">생산품목</span></div>
+    <div class="side-dot" data-target="equipment"><span class="side-dot-label" data-i18n="dot_equipment">보유장비</span></div>
+    <div class="side-dot" data-target="atomize"><span class="side-dot-label" data-i18n="dot_atomize">가스아토마이즈</span></div>
+    <div class="side-dot" data-target="contact"><span class="side-dot-label" data-i18n="dot_contact">문의</span></div>
   </div>
 
   <!-- ==================== HERO ==================== -->
@@ -156,51 +156,51 @@
       <div class="hero-slide active" data-slide="0">
         <div class="hero-content">
           <p class="hero-label reveal-hero">KOREA'S FIRST HIP SPECIALIST</p>
-          <h1 class="hero-title reveal-hero">
+          <h1 class="hero-title reveal-hero" data-i18n-html="hero_0_title">
             <span class="line">국내 최초</span>
             <span class="line"><em>H.I.P 처리</em> 전문기업</span>
           </h1>
-          <p class="hero-desc reveal-hero">
+          <p class="hero-desc reveal-hero" data-i18n-html="hero_0_desc">
             Hot Isostatic Press 기술로 소재의 한계를 넘어,<br>
             최고 품질의 산업용 부품을 생산합니다.
           </p>
           <div class="hero-cta reveal-hero">
-            <a href="#contact" class="btn-primary magnetic">견적 문의하기</a>
-            <a href="#hip" class="btn-outline magnetic">HIP 기술 알아보기</a>
+            <a href="#contact" class="btn-primary magnetic" data-i18n="hero_0_cta1">견적 문의하기</a>
+            <a href="#hip" class="btn-outline magnetic" data-i18n="hero_0_cta2">HIP 기술 알아보기</a>
           </div>
         </div>
       </div>
       <div class="hero-slide" data-slide="1">
         <div class="hero-content">
           <p class="hero-label">QUALITY UPGRADE PARTNER</p>
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-i18n-html="hero_1_title">
             <span class="line">고객의 제품을</span>
             <span class="line"><em>최상의 품질</em>로 업그레이드</span>
           </h1>
-          <p class="hero-desc">
+          <p class="hero-desc" data-i18n-html="hero_1_desc">
             Inconel, 초경합금, Titanium, Ceramic 등<br>
             다양한 소재의 HIP 처리 서비스를 제공합니다.
           </p>
           <div class="hero-cta">
-            <a href="#products" class="btn-primary magnetic">생산품목 보기</a>
-            <a href="#about" class="btn-outline magnetic">회사소개</a>
+            <a href="#products" class="btn-primary magnetic" data-i18n="hero_1_cta1">생산품목 보기</a>
+            <a href="#about" class="btn-outline magnetic" data-i18n="hero_1_cta2">회사소개</a>
           </div>
         </div>
       </div>
       <div class="hero-slide" data-slide="2">
         <div class="hero-content">
           <p class="hero-label">MAN ENERGY SOLUTIONS APPROVED</p>
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-i18n-html="hero_2_title">
             <span class="line">MAN Energy Solutions 공인</span>
             <span class="line"><em>Fuel Valve Nozzle</em> Blank 생산</span>
           </h1>
-          <p class="hero-desc">
+          <p class="hero-desc" data-i18n-html="hero_2_desc">
             국내 유일 HIP 공법 적용 연료분사 노즐 블랭크 제조.<br>
             선박 엔진의 핵심 부품을 공급합니다.
           </p>
           <div class="hero-cta">
-            <a href="#products" class="btn-primary magnetic">제품 상세보기</a>
-            <a href="#contact" class="btn-outline magnetic">문의하기</a>
+            <a href="#products" class="btn-primary magnetic" data-i18n="hero_2_cta1">제품 상세보기</a>
+            <a href="#contact" class="btn-outline magnetic" data-i18n="hero_2_cta2">문의하기</a>
           </div>
         </div>
       </div>
@@ -231,32 +231,32 @@
           <div class="service-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           </div>
-          <h3>HIP 처리 서비스</h3>
-          <p>고온 고압 등방압 처리로 소재 밀도와 강도를 극대화</p>
+          <h3 data-i18n="svc_hip_title">HIP 처리 서비스</h3>
+          <p data-i18n="svc_hip_desc">고온 고압 등방압 처리로 소재 밀도와 강도를 극대화</p>
           <span class="service-arrow">&rarr;</span>
         </a>
         <a href="#products" class="service-card reveal reveal-delay-1">
           <div class="service-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <h3>생산품목</h3>
-          <p>Fuel Valve Nozzle Blank 등 핵심 산업 부품 생산</p>
+          <h3 data-i18n="svc_products_title">생산품목</h3>
+          <p data-i18n="svc_products_desc">Fuel Valve Nozzle Blank 등 핵심 산업 부품 생산</p>
           <span class="service-arrow">&rarr;</span>
         </a>
         <a href="#equipment" class="service-card reveal reveal-delay-2">
           <div class="service-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M14 12h4"/></svg>
           </div>
-          <h3>보유장비</h3>
-          <p>HIP 장비, 진공로, 자동화설비 등 첨단 생산 인프라</p>
+          <h3 data-i18n="svc_equip_title">보유장비</h3>
+          <p data-i18n="svc_equip_desc">HIP 장비, 진공로, 자동화설비 등 첨단 생산 인프라</p>
           <span class="service-arrow">&rarr;</span>
         </a>
         <a href="#atomize" class="service-card reveal reveal-delay-3">
           <div class="service-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
           </div>
-          <h3>가스 아토마이즈</h3>
-          <p>고순도 금속 분말 제조 공정 기술</p>
+          <h3 data-i18n="svc_atomize_title">가스 아토마이즈</h3>
+          <p data-i18n="svc_atomize_desc">고순도 금속 분말 제조 공정 기술</p>
           <span class="service-arrow">&rarr;</span>
         </a>
       </div>
@@ -268,28 +268,28 @@
     <div class="section-inner">
       <div class="numbers-header">
         <p class="section-label reveal">KOHIPS TECH AT A GLANCE</p>
-        <h2 class="section-title reveal reveal-delay-1">숫자로 보는 <em>코힙스테크</em></h2>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="numbers_title">숫자로 보는 <em>코힙스테크</em></h2>
       </div>
       <div class="numbers-grid">
         <div class="number-item reveal">
           <div class="number-value" data-count="2006">0</div>
-          <div class="number-label">설립연도</div>
-          <div class="number-desc">국내 최초 HIP 전문기업으로 출발</div>
+          <div class="number-label" data-i18n="num_year_label">설립연도</div>
+          <div class="number-desc" data-i18n="num_year_desc">국내 최초 HIP 전문기업으로 출발</div>
         </div>
         <div class="number-item reveal reveal-delay-1">
-          <div class="number-value" data-count="7" data-suffix="건+">0</div>
-          <div class="number-label">주요 인증</div>
-          <div class="number-desc">MAN Energy Solutions 승인 포함</div>
+          <div class="number-value" data-count="7" data-suffix="건+" data-i18n-suffix="num_cert_suffix">0</div>
+          <div class="number-label" data-i18n="num_cert_label">주요 인증</div>
+          <div class="number-desc" data-i18n="num_cert_desc">MAN Energy Solutions 승인 포함</div>
         </div>
         <div class="number-item reveal reveal-delay-2">
-          <div class="number-value" data-count="50" data-suffix="개+">0</div>
-          <div class="number-label">주요 납품처</div>
-          <div class="number-desc">조선, 항공, 방산, 자동차 산업</div>
+          <div class="number-value" data-count="50" data-suffix="개+" data-i18n-suffix="num_client_suffix">0</div>
+          <div class="number-label" data-i18n="num_client_label">주요 납품처</div>
+          <div class="number-desc" data-i18n="num_client_desc">조선, 항공, 방산, 자동차 산업</div>
         </div>
         <div class="number-item reveal reveal-delay-3">
-          <div class="number-value" data-count="20" data-suffix="년">0</div>
-          <div class="number-label">업력</div>
-          <div class="number-desc">축적된 기술력과 경험</div>
+          <div class="number-value" data-count="20" data-suffix="년" data-i18n-suffix="num_exp_suffix">0</div>
+          <div class="number-label" data-i18n="num_exp_label">업력</div>
+          <div class="number-desc" data-i18n="num_exp_desc">축적된 기술력과 경험</div>
         </div>
       </div>
     </div>
@@ -301,69 +301,69 @@
       <div class="about-grid">
         <div class="about-left">
           <p class="section-label reveal">ABOUT US</p>
-          <h2 class="section-title reveal reveal-delay-1">
+          <h2 class="section-title reveal reveal-delay-1" data-i18n-html="about_title">
             국내 최초 <em>H.I.P 전문기업</em><br>코힙스테크
           </h2>
           <div class="about-ceo reveal reveal-delay-2">
             <div class="ceo-badge">CEO MESSAGE</div>
-            <blockquote>
+            <blockquote data-i18n="about_ceo_quote">
               "코힙스테크는 HIP(Hot Isostatic Press) 기술을 핵심 역량으로,
               고객의 제품 품질을 한 차원 높이는 데 전력을 다하고 있습니다.
               국내 유일의 HIP 공법 기반 Fuel Valve Nozzle Blank 제조 기술을 바탕으로
               글로벌 시장에서의 경쟁력을 확보해 나가겠습니다."
             </blockquote>
             <div class="ceo-name">
-              <strong>대표이사 이명배</strong>
-              <span>코힙스테크 KOHIPS TECH CO.</span>
+              <strong data-i18n="about_ceo_name">대표이사 이명배</strong>
+              <span data-i18n="about_ceo_co">코힙스테크 KOHIPS TECH CO.</span>
             </div>
           </div>
           <div class="about-info reveal reveal-delay-3">
             <div class="info-item">
-              <span class="info-label">회사명</span>
-              <span class="info-value">코힙스테크 (KOHIPS TECH CO.)</span>
+              <span class="info-label" data-i18n="about_lbl_company">회사명</span>
+              <span class="info-value" data-i18n="about_val_company">코힙스테크 (KOHIPS TECH CO.)</span>
             </div>
             <div class="info-item">
-              <span class="info-label">대표이사</span>
-              <span class="info-value">이명배</span>
+              <span class="info-label" data-i18n="about_lbl_ceo">대표이사</span>
+              <span class="info-value" data-i18n="about_val_ceo">이명배</span>
             </div>
             <div class="info-item">
-              <span class="info-label">소재지</span>
-              <span class="info-value">경상북도 경산시 진량읍 공단9로 103</span>
+              <span class="info-label" data-i18n="about_lbl_location">소재지</span>
+              <span class="info-value" data-i18n="about_val_location">경상북도 경산시 진량읍 공단9로 103</span>
             </div>
             <div class="info-item">
-              <span class="info-label">업종</span>
-              <span class="info-value">산업용 노, 로 및 로용 버너 제조업</span>
+              <span class="info-label" data-i18n="about_lbl_industry">업종</span>
+              <span class="info-value" data-i18n="about_val_industry">산업용 노, 로 및 로용 버너 제조업</span>
             </div>
           </div>
         </div>
         <div class="about-right">
           <!-- Timeline -->
           <div class="timeline reveal reveal-delay-2">
-            <h3 class="timeline-title">회사 연혁</h3>
+            <h3 class="timeline-title" data-i18n="timeline_title">회사 연혁</h3>
             <div class="timeline-track">
               <div class="timeline-item">
                 <div class="timeline-year">2006</div>
-                <div class="timeline-content">코힙스테크 설립, 국내 최초 HIP 처리 전문기업</div>
+                <div class="timeline-content" data-i18n="timeline_2006">코힙스테크 설립, 국내 최초 HIP 처리 전문기업</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-year">2010</div>
-                <div class="timeline-content">HIP 장비 확충, 진공로(600Kg) 도입</div>
+                <div class="timeline-content" data-i18n="timeline_2010">HIP 장비 확충, 진공로(600Kg) 도입</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-year">2014</div>
-                <div class="timeline-content">진공로(1000Kg) 도입, 생산능력 확대</div>
+                <div class="timeline-content" data-i18n="timeline_2014">진공로(1000Kg) 도입, 생산능력 확대</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-year">2018</div>
-                <div class="timeline-content">MAN Energy Solutions Fuel Valve Nozzle Blank 제조 승인</div>
+                <div class="timeline-content" data-i18n="timeline_2018">MAN Energy Solutions Fuel Valve Nozzle Blank 제조 승인</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-year">2020</div>
-                <div class="timeline-content">가스 아토마이즈 설비 도입</div>
+                <div class="timeline-content" data-i18n="timeline_2020">가스 아토마이즈 설비 도입</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-year">2024</div>
-                <div class="timeline-content">노즐 생산 자동화장비 도입, 글로벌 납품 확대</div>
+                <div class="timeline-content" data-i18n="timeline_2024">노즐 생산 자동화장비 도입, 글로벌 납품 확대</div>
               </div>
             </div>
           </div>
@@ -373,25 +373,25 @@
               <div class="cert-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-3 3 1-4-3-3h4L12 7l1 4h4l-3 3 1 4z"/><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span>MAN Energy Solutions 승인</span>
+              <span data-i18n="cert_man">MAN Energy Solutions 승인</span>
             </div>
             <div class="cert-card">
               <div class="cert-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span>ISO 9001 품질경영</span>
+              <span data-i18n="cert_iso">ISO 9001 품질경영</span>
             </div>
             <div class="cert-card">
               <div class="cert-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span>벤처기업 인증</span>
+              <span data-i18n="cert_venture">벤처기업 인증</span>
             </div>
             <div class="cert-card">
               <div class="cert-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span>연구개발전담부서</span>
+              <span data-i18n="cert_rnd">연구개발전담부서</span>
             </div>
           </div>
         </div>
@@ -405,8 +405,8 @@
     <div class="section-inner">
       <div class="hip-header">
         <p class="section-label reveal">HOT ISOSTATIC PRESSING</p>
-        <h2 class="section-title reveal reveal-delay-1"><em>H.I.P</em> 기술이란?</h2>
-        <p class="hip-desc reveal reveal-delay-2">
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="hip_title"><em>H.I.P</em> 기술이란?</h2>
+        <p class="hip-desc reveal reveal-delay-2" data-i18n="hip_desc">
           HIP(Hot Isostatic Press, 열간등방압)은 고온·고압의 불활성 가스(Ar) 환경에서
           소재에 균일한 등방향 압력을 가하여 내부 기공을 제거하고 밀도를 극대화하는
           첨단 소재 가공 기술입니다. 주조 결함 제거, 분말야금 성형, 확산 접합 등에 활용됩니다.
@@ -420,8 +420,8 @@
           <div class="hip-step-icon-wrap">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
           </div>
-          <h3>소재 장입</h3>
-          <p>처리할 소재를 HIP 챔버 내에 정밀하게 배치합니다</p>
+          <h3 data-i18n="hip_step1_title">소재 장입</h3>
+          <p data-i18n="hip_step1_desc">처리할 소재를 HIP 챔버 내에 정밀하게 배치합니다</p>
         </div>
         <div class="hip-step-arrow reveal reveal-delay-1">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
@@ -431,8 +431,8 @@
           <div class="hip-step-icon-wrap">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 00-7.07 17.07L12 12V2z"/><circle cx="12" cy="12" r="10"/></svg>
           </div>
-          <h3>가열 · 가압</h3>
-          <p>고온(최대 2000°C) + 고압(최대 200MPa) Ar 가스 환경 조성</p>
+          <h3 data-i18n="hip_step2_title">가열 · 가압</h3>
+          <p data-i18n="hip_step2_desc">고온(최대 2000°C) + 고압(최대 200MPa) Ar 가스 환경 조성</p>
         </div>
         <div class="hip-step-arrow reveal reveal-delay-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
@@ -442,8 +442,8 @@
           <div class="hip-step-icon-wrap">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
           </div>
-          <h3>등방향 압축</h3>
-          <p>모든 방향에서 균일한 압력으로 기공 제거 및 치밀화</p>
+          <h3 data-i18n="hip_step3_title">등방향 압축</h3>
+          <p data-i18n="hip_step3_desc">모든 방향에서 균일한 압력으로 기공 제거 및 치밀화</p>
         </div>
         <div class="hip-step-arrow reveal reveal-delay-3">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
@@ -453,53 +453,53 @@
           <div class="hip-step-icon-wrap">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
           </div>
-          <h3>완성</h3>
-          <p>고밀도·고강도의 무결점 소재 완성</p>
+          <h3 data-i18n="hip_step4_title">완성</h3>
+          <p data-i18n="hip_step4_desc">고밀도·고강도의 무결점 소재 완성</p>
         </div>
       </div>
 
       <!-- Treatable Materials -->
       <div class="hip-materials">
-        <h3 class="reveal">HIP 처리 가능 소재</h3>
+        <h3 class="reveal" data-i18n="hip_materials_title">HIP 처리 가능 소재</h3>
         <div class="material-tags reveal reveal-delay-1">
-          <span class="material-tag">Inconel 합금</span>
-          <span class="material-tag">초경합금 (WC-Co)</span>
-          <span class="material-tag">Titanium Casting</span>
-          <span class="material-tag">Aluminum Casting</span>
-          <span class="material-tag">Ceramic</span>
-          <span class="material-tag">P/M HSS</span>
-          <span class="material-tag">3D Printing 소재</span>
+          <span class="material-tag" data-i18n="mat_inconel">Inconel 합금</span>
+          <span class="material-tag" data-i18n="mat_wc">초경합금 (WC-Co)</span>
+          <span class="material-tag" data-i18n="mat_ti">Titanium Casting</span>
+          <span class="material-tag" data-i18n="mat_al">Aluminum Casting</span>
+          <span class="material-tag" data-i18n="mat_ceramic">Ceramic</span>
+          <span class="material-tag" data-i18n="mat_pmhss">P/M HSS</span>
+          <span class="material-tag" data-i18n="mat_3dp">3D Printing 소재</span>
         </div>
       </div>
 
       <!-- Before/After -->
       <div class="hip-comparison reveal">
-        <h3>HIP 처리 효과</h3>
+        <h3 data-i18n="hip_comparison_title">HIP 처리 효과</h3>
         <div class="comparison-grid">
           <div class="comparison-item">
             <div class="comparison-bar-wrap">
-              <div class="comparison-label">밀도</div>
+              <div class="comparison-label" data-i18n="comp_density">밀도</div>
               <div class="comparison-bars">
-                <div class="bar-before"><div class="bar-fill" style="width:75%">처리 전 75%</div></div>
-                <div class="bar-after"><div class="bar-fill" style="width:99%">처리 후 99%+</div></div>
+                <div class="bar-before"><div class="bar-fill" style="width:75%" data-i18n="comp_before_density">처리 전 75%</div></div>
+                <div class="bar-after"><div class="bar-fill" style="width:99%" data-i18n="comp_after_density">처리 후 99%+</div></div>
               </div>
             </div>
           </div>
           <div class="comparison-item">
             <div class="comparison-bar-wrap">
-              <div class="comparison-label">피로강도</div>
+              <div class="comparison-label" data-i18n="comp_fatigue">피로강도</div>
               <div class="comparison-bars">
-                <div class="bar-before"><div class="bar-fill" style="width:60%">처리 전</div></div>
-                <div class="bar-after"><div class="bar-fill" style="width:95%">최대 50% 향상</div></div>
+                <div class="bar-before"><div class="bar-fill" style="width:60%" data-i18n="comp_before_fatigue">처리 전</div></div>
+                <div class="bar-after"><div class="bar-fill" style="width:95%" data-i18n="comp_after_fatigue">최대 50% 향상</div></div>
               </div>
             </div>
           </div>
           <div class="comparison-item">
             <div class="comparison-bar-wrap">
-              <div class="comparison-label">내마모성</div>
+              <div class="comparison-label" data-i18n="comp_wear">내마모성</div>
               <div class="comparison-bars">
-                <div class="bar-before"><div class="bar-fill" style="width:55%">처리 전</div></div>
-                <div class="bar-after"><div class="bar-fill" style="width:90%">대폭 향상</div></div>
+                <div class="bar-before"><div class="bar-fill" style="width:55%" data-i18n="comp_before_wear">처리 전</div></div>
+                <div class="bar-after"><div class="bar-fill" style="width:90%" data-i18n="comp_after_wear">대폭 향상</div></div>
               </div>
             </div>
           </div>
@@ -508,37 +508,37 @@
 
       <!-- Application Industries -->
       <div class="hip-industries reveal">
-        <h3>적용 산업 분야</h3>
+        <h3 data-i18n="hip_industries_title">적용 산업 분야</h3>
         <div class="industry-icons">
           <div class="industry-item">
             <div class="industry-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><path d="M9 20v-4h6v4"/></svg>
             </div>
-            <span>조선</span>
+            <span data-i18n="ind_ship">조선</span>
           </div>
           <div class="industry-item">
             <div class="industry-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.4 3.2-2.7 2.7L4 13.5c-.4-.1-.8 0-1 .3l-.2.3c-.2.3-.1.7.2.9l3.6 2.1 2.1 3.6c.2.3.6.4.9.2l.3-.2c.3-.2.4-.6.3-1l-.7-2.4 2.7-2.7 3.2 5.4c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
             </div>
-            <span>항공</span>
+            <span data-i18n="ind_aero">항공</span>
           </div>
           <div class="industry-item">
             <div class="industry-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <span>방산</span>
+            <span data-i18n="ind_defense">방산</span>
           </div>
           <div class="industry-item">
             <div class="industry-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3V6l4-3h8l5 8h1v6h-2"/><path d="M9 17h6"/><path d="M15 3v8h5"/></svg>
             </div>
-            <span>자동차</span>
+            <span data-i18n="ind_auto">자동차</span>
           </div>
           <div class="industry-item">
             <div class="industry-icon">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
-            <span>에너지</span>
+            <span data-i18n="ind_energy">에너지</span>
           </div>
         </div>
       </div>
@@ -549,8 +549,8 @@
   <section id="products">
     <div class="section-inner">
       <p class="section-label reveal">PRODUCTS</p>
-      <h2 class="section-title reveal reveal-delay-1"><em>생산</em>품목</h2>
-      <p class="section-desc reveal reveal-delay-2">
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="products_title"><em>생산</em>품목</h2>
+      <p class="section-desc reveal reveal-delay-2" data-i18n="products_desc">
         MAN Energy Solutions 공인 Fuel Valve Nozzle Blank을 비롯한 고품질 HIP 제품을 생산합니다.
       </p>
 
@@ -564,14 +564,14 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">HIP 공법 | MAN 승인</span>
-            <h3>Fuel Valve Nozzle Blank</h3>
-            <p>선박 엔진 연료 분사 노즐 소재. MAN Energy Solutions로부터 제조 승인을 취득한 국내 유일 HIP 공법 적용 제품.</p>
+            <span class="product-tag" data-i18n="prod_main_tag">HIP 공법 | MAN 승인</span>
+            <h3 data-i18n="prod_main_title">Fuel Valve Nozzle Blank</h3>
+            <p data-i18n="prod_main_desc">선박 엔진 연료 분사 노즐 소재. MAN Energy Solutions로부터 제조 승인을 취득한 국내 유일 HIP 공법 적용 제품.</p>
             <ul class="product-specs">
-              <li><strong>소재:</strong> Inconel 합금 기반</li>
-              <li><strong>공법:</strong> HIP Near-net Shape</li>
-              <li><strong>적용:</strong> 선박 2행정 디젤 엔진</li>
-              <li><strong>인증:</strong> MAN Energy Solutions 공인</li>
+              <li data-i18n-html="prod_main_spec1"><strong>소재:</strong> Inconel 합금 기반</li>
+              <li data-i18n-html="prod_main_spec2"><strong>공법:</strong> HIP Near-net Shape</li>
+              <li data-i18n-html="prod_main_spec3"><strong>적용:</strong> 선박 2행정 디젤 엔진</li>
+              <li data-i18n-html="prod_main_spec4"><strong>인증:</strong> MAN Energy Solutions 공인</li>
             </ul>
           </div>
         </div>
@@ -583,9 +583,9 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">HIP 처리</span>
-            <h3>초경합금 (WC-Co) 부품</h3>
-            <p>HIP 처리를 통한 고밀도 초경합금 소재. 절삭공구, 금형, 내마모 부품 등에 적용.</p>
+            <span class="product-tag" data-i18n="prod_wc_tag">HIP 처리</span>
+            <h3 data-i18n="prod_wc_title">초경합금 (WC-Co) 부품</h3>
+            <p data-i18n="prod_wc_desc">HIP 처리를 통한 고밀도 초경합금 소재. 절삭공구, 금형, 내마모 부품 등에 적용.</p>
           </div>
         </div>
 
@@ -596,9 +596,9 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">HIP 처리</span>
-            <h3>Titanium Casting 부품</h3>
-            <p>티타늄 주조품의 내부 기공 제거, 항공·의료 분야 고품질 부품 생산.</p>
+            <span class="product-tag" data-i18n="prod_ti_tag">HIP 처리</span>
+            <h3 data-i18n="prod_ti_title">Titanium Casting 부품</h3>
+            <p data-i18n="prod_ti_desc">티타늄 주조품의 내부 기공 제거, 항공·의료 분야 고품질 부품 생산.</p>
           </div>
         </div>
 
@@ -609,9 +609,9 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">HIP 처리</span>
-            <h3>Inconel 합금 부품</h3>
-            <p>고온·고압 환경에 사용되는 니켈 기반 초합금의 HIP 처리 및 성형.</p>
+            <span class="product-tag" data-i18n="prod_inconel_tag">HIP 처리</span>
+            <h3 data-i18n="prod_inconel_title">Inconel 합금 부품</h3>
+            <p data-i18n="prod_inconel_desc">고온·고압 환경에 사용되는 니켈 기반 초합금의 HIP 처리 및 성형.</p>
           </div>
         </div>
 
@@ -622,9 +622,9 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">분말야금</span>
-            <h3>P/M HSS 소재</h3>
-            <p>분말야금 고속도강. HIP 처리로 균일한 미세조직과 우수한 기계적 특성 확보.</p>
+            <span class="product-tag" data-i18n="prod_pmhss_tag">분말야금</span>
+            <h3 data-i18n="prod_pmhss_title">P/M HSS 소재</h3>
+            <p data-i18n="prod_pmhss_desc">분말야금 고속도강. HIP 처리로 균일한 미세조직과 우수한 기계적 특성 확보.</p>
           </div>
         </div>
 
@@ -635,45 +635,45 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-tag">3D 프린팅</span>
-            <h3>3D Printing 후처리</h3>
-            <p>적층 제조(AM) 부품의 잔류 기공 제거 및 밀도 개선을 위한 HIP 후처리.</p>
+            <span class="product-tag" data-i18n="prod_3dp_tag">3D 프린팅</span>
+            <h3 data-i18n="prod_3dp_title">3D Printing 후처리</h3>
+            <p data-i18n="prod_3dp_desc">적층 제조(AM) 부품의 잔류 기공 제거 및 밀도 개선을 위한 HIP 후처리.</p>
           </div>
         </div>
       </div>
 
       <!-- Nozzle Process -->
       <div class="nozzle-process reveal">
-        <h3>Fuel Valve Nozzle Blank 제조 공정</h3>
+        <h3 data-i18n="nozzle_title">Fuel Valve Nozzle Blank 제조 공정</h3>
         <div class="process-flow">
           <div class="process-step">
             <div class="process-num">1</div>
-            <span>원료 분말 준비</span>
+            <span data-i18n="proc_step1">원료 분말 준비</span>
           </div>
           <div class="process-arrow">&rarr;</div>
           <div class="process-step">
             <div class="process-num">2</div>
-            <span>캡슐 충전</span>
+            <span data-i18n="proc_step2">캡슐 충전</span>
           </div>
           <div class="process-arrow">&rarr;</div>
           <div class="process-step">
             <div class="process-num">3</div>
-            <span>HIP 처리</span>
+            <span data-i18n="proc_step3">HIP 처리</span>
           </div>
           <div class="process-arrow">&rarr;</div>
           <div class="process-step">
             <div class="process-num">4</div>
-            <span>기계 가공</span>
+            <span data-i18n="proc_step4">기계 가공</span>
           </div>
           <div class="process-arrow">&rarr;</div>
           <div class="process-step">
             <div class="process-num">5</div>
-            <span>품질 검사</span>
+            <span data-i18n="proc_step5">품질 검사</span>
           </div>
           <div class="process-arrow">&rarr;</div>
           <div class="process-step">
             <div class="process-num">6</div>
-            <span>출하</span>
+            <span data-i18n="proc_step6">출하</span>
           </div>
         </div>
       </div>
@@ -684,8 +684,8 @@
   <section id="equipment">
     <div class="section-inner">
       <p class="section-label reveal">FACILITIES & EQUIPMENT</p>
-      <h2 class="section-title reveal reveal-delay-1">보유 <em>장비</em></h2>
-      <p class="section-desc reveal reveal-delay-2">
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="equip_title">보유 <em>장비</em></h2>
+      <p class="section-desc reveal reveal-delay-2" data-i18n="equip_desc">
         최첨단 HIP 장비와 진공로, 자동화 설비를 갖추고 고품질 생산 체계를 운영합니다.
       </p>
 
@@ -695,14 +695,14 @@
             <div class="equip-icon-wrap">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><circle cx="12" cy="15" r="2"/></svg>
             </div>
-            <span class="equip-badge">핵심 장비</span>
+            <span class="equip-badge" data-i18n="equip_badge">핵심 장비</span>
           </div>
-          <h3>HIP 장비</h3>
-          <p>고온·고압 등방압 프레스. 최대 2000°C, 200MPa 환경에서 소재 처리.</p>
+          <h3 data-i18n="equip_hip_title">HIP 장비</h3>
+          <p data-i18n="equip_hip_desc">고온·고압 등방압 프레스. 최대 2000°C, 200MPa 환경에서 소재 처리.</p>
           <table class="equip-specs">
-            <tr><td>최대 온도</td><td>2,000°C</td></tr>
-            <tr><td>최대 압력</td><td>200 MPa</td></tr>
-            <tr><td>가스</td><td>Argon (Ar)</td></tr>
+            <tr><td data-i18n="equip_spec_temp">최대 온도</td><td>2,000°C</td></tr>
+            <tr><td data-i18n="equip_spec_pressure">최대 압력</td><td>200 MPa</td></tr>
+            <tr><td data-i18n="equip_spec_gas">가스</td><td>Argon (Ar)</td></tr>
           </table>
         </div>
 
@@ -712,11 +712,11 @@
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 00-7.07 17.07L12 12V2z"/><circle cx="12" cy="12" r="10"/></svg>
             </div>
           </div>
-          <h3>진공로 (1,000Kg)</h3>
-          <p>대용량 진공 열처리용 소결로. 고진공 환경에서 대형 소재 처리.</p>
+          <h3 data-i18n="equip_vac1000_title">진공로 (1,000Kg)</h3>
+          <p data-i18n="equip_vac1000_desc">대용량 진공 열처리용 소결로. 고진공 환경에서 대형 소재 처리.</p>
           <table class="equip-specs">
-            <tr><td>용량</td><td>1,000 Kg</td></tr>
-            <tr><td>분위기</td><td>고진공</td></tr>
+            <tr><td data-i18n="equip_spec_capacity">용량</td><td>1,000 Kg</td></tr>
+            <tr><td data-i18n="equip_spec_atmo">분위기</td><td data-i18n="equip_spec_highvac">고진공</td></tr>
           </table>
         </div>
 
@@ -726,11 +726,11 @@
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 00-7.07 17.07L12 12V2z"/><circle cx="12" cy="12" r="10"/></svg>
             </div>
           </div>
-          <h3>진공로 (600Kg)</h3>
-          <p>중형 진공 열처리 장비. 정밀 소재의 소결 및 열처리에 활용.</p>
+          <h3 data-i18n="equip_vac600_title">진공로 (600Kg)</h3>
+          <p data-i18n="equip_vac600_desc">중형 진공 열처리 장비. 정밀 소재의 소결 및 열처리에 활용.</p>
           <table class="equip-specs">
-            <tr><td>용량</td><td>600 Kg</td></tr>
-            <tr><td>분위기</td><td>고진공</td></tr>
+            <tr><td data-i18n="equip_spec_capacity">용량</td><td>600 Kg</td></tr>
+            <tr><td data-i18n="equip_spec_atmo">분위기</td><td data-i18n="equip_spec_highvac">고진공</td></tr>
           </table>
         </div>
 
@@ -740,8 +740,8 @@
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
           </div>
-          <h3>Electric Furnace</h3>
-          <p>전기로 기반 가열 설비. 다양한 열처리 공정 지원.</p>
+          <h3 data-i18n="equip_ef_title">Electric Furnace</h3>
+          <p data-i18n="equip_ef_desc">전기로 기반 가열 설비. 다양한 열처리 공정 지원.</p>
         </div>
 
         <div class="equip-card reveal reveal-delay-1">
@@ -750,8 +750,8 @@
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
             </div>
           </div>
-          <h3>가스 아토마이저</h3>
-          <p>고순도 금속 분말 제조 전용 가스 아토마이즈 설비.</p>
+          <h3 data-i18n="equip_atomizer_title">가스 아토마이저</h3>
+          <p data-i18n="equip_atomizer_desc">고순도 금속 분말 제조 전용 가스 아토마이즈 설비.</p>
         </div>
 
         <div class="equip-card reveal reveal-delay-2">
@@ -760,8 +760,8 @@
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M14 12h4"/></svg>
             </div>
           </div>
-          <h3>노즐 생산 자동화장비</h3>
-          <p>Fuel Valve Nozzle Blank 생산을 위한 전용 자동화 라인.</p>
+          <h3 data-i18n="equip_nozzle_title">노즐 생산 자동화장비</h3>
+          <p data-i18n="equip_nozzle_desc">Fuel Valve Nozzle Blank 생산을 위한 전용 자동화 라인.</p>
         </div>
       </div>
     </div>
@@ -777,29 +777,29 @@
               <div class="stage-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 00-7.07 17.07L12 12V2z"/><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span>원소재 용융</span>
+              <span data-i18n="atomize_stage1">원소재 용융</span>
             </div>
             <div class="atomize-flow-line"></div>
             <div class="atomize-stage" id="atomStage2">
               <div class="stage-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="8" stroke-dasharray="4 4"/></svg>
               </div>
-              <span>Gas Atomizing</span>
+              <span data-i18n="atomize_stage2">Gas Atomizing</span>
             </div>
             <div class="atomize-flow-line"></div>
             <div class="atomize-stage" id="atomStage3">
               <div class="stage-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="14" r="2"/><circle cx="16" cy="10" r="2"/><circle cx="12" cy="18" r="1.5"/><circle cx="6" cy="8" r="1"/><circle cx="18" cy="16" r="1"/></svg>
               </div>
-              <span>분말 형성</span>
+              <span data-i18n="atomize_stage3">분말 형성</span>
             </div>
           </div>
         </div>
         <div class="atomize-content">
           <p class="section-label reveal">GAS ATOMIZATION</p>
-          <h2 class="section-title reveal reveal-delay-1"><em>가스 아토마이즈</em> 기술</h2>
-          <p class="reveal reveal-delay-2" style="color:#8892a0; line-height:1.9; margin-bottom:30px;">
-            고압의 불활성 가스(Ar, N2)를 이용하여 용융 금속 스트림을 미세한
+          <h2 class="section-title reveal reveal-delay-1" data-i18n-html="atomize_title"><em>가스 아토마이즈</em> 기술</h2>
+          <p class="reveal reveal-delay-2" style="color:#8892a0; line-height:1.9; margin-bottom:30px;" data-i18n="atomize_desc">
+            고압의 불활성 가스(Ar, N₂)를 이용하여 용융 금속 스트림을 미세한
             구형 분말로 분쇄하는 첨단 분말 제조 기술입니다.
             3D 프린팅(AM), MIM, HIP, 플라즈마 용사 등 다양한 첨단 공정의
             원료 분말을 생산합니다.
@@ -808,29 +808,29 @@
             <div class="atomize-feature reveal reveal-delay-2">
               <div class="feature-dot"></div>
               <div>
-                <h4>고순도 구형 분말</h4>
-                <p>균일한 입도 분포, 높은 구형도, 우수한 유동성을 가진 금속 분말 생산</p>
+                <h4 data-i18n="atomize_feat1_title">고순도 구형 분말</h4>
+                <p data-i18n="atomize_feat1_desc">균일한 입도 분포, 높은 구형도, 우수한 유동성을 가진 금속 분말 생산</p>
               </div>
             </div>
             <div class="atomize-feature reveal reveal-delay-3">
               <div class="feature-dot"></div>
               <div>
-                <h4>다양한 합금 대응</h4>
-                <p>Ni-base, Co-base, Fe-base, Ti 합금 등 다양한 소재 계열 제조 가능</p>
+                <h4 data-i18n="atomize_feat2_title">다양한 합금 대응</h4>
+                <p data-i18n="atomize_feat2_desc">Ni-base, Co-base, Fe-base, Ti 합금 등 다양한 소재 계열 제조 가능</p>
               </div>
             </div>
             <div class="atomize-feature reveal reveal-delay-4">
               <div class="feature-dot"></div>
               <div>
-                <h4>맞춤형 입도 제어</h4>
-                <p>용도별 최적 입도 분포 제공 (15~45um, 45~105um, 105~250um 등)</p>
+                <h4 data-i18n="atomize_feat3_title">맞춤형 입도 제어</h4>
+                <p data-i18n="atomize_feat3_desc">용도별 최적 입도 분포 제공 (15~45μm, 45~105μm, 105~250μm 등)</p>
               </div>
             </div>
             <div class="atomize-feature reveal reveal-delay-4">
               <div class="feature-dot"></div>
               <div>
-                <h4>적용 분야</h4>
-                <p>3D 프린팅(SLM/EBM), MIM, HIP, 플라즈마 용사, 레이저 클래딩</p>
+                <h4 data-i18n="atomize_feat4_title">적용 분야</h4>
+                <p data-i18n="atomize_feat4_desc">3D 프린팅(SLM/EBM), MIM, HIP, 플라즈마 용사, 레이저 클래딩</p>
               </div>
             </div>
           </div>
@@ -845,27 +845,27 @@
       <div class="news-header">
         <div>
           <p class="section-label reveal">NEWS & NOTICE</p>
-          <h2 class="section-title reveal reveal-delay-1">뉴스 & <em>공지</em></h2>
+          <h2 class="section-title reveal reveal-delay-1" data-i18n-html="news_title">뉴스 & <em>공지</em></h2>
         </div>
       </div>
       <div class="news-grid">
         <div class="news-card reveal">
           <div class="news-date">2026.03.10</div>
-          <h3>MAN Energy Solutions 정기 품질 감사 통과</h3>
-          <p>코힙스테크가 MAN Energy Solutions의 2026년 정기 품질 감사를 성공적으로 통과하였습니다.</p>
-          <span class="news-tag">인증</span>
+          <h3 data-i18n="news1_title">MAN Energy Solutions 정기 품질 감사 통과</h3>
+          <p data-i18n="news1_desc">코힙스테크가 MAN Energy Solutions의 2026년 정기 품질 감사를 성공적으로 통과하였습니다.</p>
+          <span class="news-tag" data-i18n="news1_tag">인증</span>
         </div>
         <div class="news-card reveal reveal-delay-1">
           <div class="news-date">2026.02.15</div>
-          <h3>가스 아토마이즈 설비 업그레이드 완료</h3>
-          <p>금속 분말 생산 효율 향상을 위한 가스 아토마이즈 설비 업그레이드가 완료되었습니다.</p>
-          <span class="news-tag">설비</span>
+          <h3 data-i18n="news2_title">가스 아토마이즈 설비 업그레이드 완료</h3>
+          <p data-i18n="news2_desc">금속 분말 생산 효율 향상을 위한 가스 아토마이즈 설비 업그레이드가 완료되었습니다.</p>
+          <span class="news-tag" data-i18n="news2_tag">설비</span>
         </div>
         <div class="news-card reveal reveal-delay-2">
           <div class="news-date">2026.01.20</div>
-          <h3>3D 프린팅 소재 HIP 후처리 서비스 개시</h3>
-          <p>적층 제조(AM) 부품의 품질 향상을 위한 전문 HIP 후처리 서비스를 새롭게 제공합니다.</p>
-          <span class="news-tag">신규서비스</span>
+          <h3 data-i18n="news3_title">3D 프린팅 소재 HIP 후처리 서비스 개시</h3>
+          <p data-i18n="news3_desc">적층 제조(AM) 부품의 품질 향상을 위한 전문 HIP 후처리 서비스를 새롭게 제공합니다.</p>
+          <span class="news-tag" data-i18n="news3_tag">신규서비스</span>
         </div>
       </div>
     </div>
@@ -875,61 +875,61 @@
   <section id="contact">
     <div class="section-inner">
       <p class="section-label reveal">CONTACT US</p>
-      <h2 class="section-title reveal reveal-delay-1"><em>견적 문의</em> & 연락처</h2>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="contact_title"><em>견적 문의</em> & 연락처</h2>
 
       <div class="contact-grid">
         <!-- Contact Form -->
         <form class="contact-form reveal reveal-delay-2" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group">
-              <label>회사명 <span class="req">*</span></label>
-              <input type="text" placeholder="회사명을 입력해주세요" required>
+              <label data-i18n="form_company">회사명 <span class="req">*</span></label>
+              <input type="text" data-i18n-placeholder="form_company_ph" placeholder="회사명을 입력해주세요" required>
             </div>
             <div class="form-group">
-              <label>담당자명 <span class="req">*</span></label>
-              <input type="text" placeholder="담당자 성함" required>
+              <label data-i18n="form_name">담당자명 <span class="req">*</span></label>
+              <input type="text" data-i18n-placeholder="form_name_ph" placeholder="담당자 성함" required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>연락처 <span class="req">*</span></label>
+              <label data-i18n="form_phone">연락처 <span class="req">*</span></label>
               <input type="tel" placeholder="010-0000-0000" required>
             </div>
             <div class="form-group">
-              <label>이메일 <span class="req">*</span></label>
+              <label data-i18n="form_email">이메일 <span class="req">*</span></label>
               <input type="email" placeholder="email@company.com" required>
             </div>
           </div>
           <div class="form-group">
-            <label>문의 내용 <span class="req">*</span></label>
-            <textarea placeholder="문의하실 내용을 상세히 작성해주세요. (처리 소재, 수량, 납기 등)" required></textarea>
+            <label data-i18n="form_message">문의 내용 <span class="req">*</span></label>
+            <textarea data-i18n-placeholder="form_message_ph" placeholder="문의하실 내용을 상세히 작성해주세요. (처리 소재, 수량, 납기 등)" required></textarea>
           </div>
           <div class="form-group">
-            <label>파일 첨부 (도면 등)</label>
+            <label data-i18n="form_file">파일 첨부 (도면 등)</label>
             <div class="file-upload" id="fileUpload">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span>파일을 드래그하거나 클릭하여 첨부</span>
+              <span data-i18n="form_file_hint">파일을 드래그하거나 클릭하여 첨부</span>
               <input type="file" id="fileInput" style="display:none">
             </div>
           </div>
           <div class="form-check">
             <input type="checkbox" id="privacyCheck" required>
-            <label for="privacyCheck">개인정보 수집 및 이용에 동의합니다. <a href="#" style="color:#3A7BD5;">자세히 보기</a></label>
+            <label for="privacyCheck"><span data-i18n="form_privacy">개인정보 수집 및 이용에 동의합니다.</span> <a href="#" style="color:#3A7BD5;" data-i18n="form_privacy_link">자세히 보기</a></label>
           </div>
-          <button type="submit" class="btn-primary magnetic">견적 문의 보내기</button>
+          <button type="submit" class="btn-primary magnetic" data-i18n="form_submit">견적 문의 보내기</button>
         </form>
 
         <!-- Contact Info -->
         <div class="contact-info-block reveal reveal-delay-3">
           <div class="contact-info-card">
-            <h3>연락처 정보</h3>
+            <h3 data-i18n="contact_info_title">연락처 정보</h3>
             <div class="contact-items">
               <div class="contact-item">
                 <div class="contact-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
                 </div>
                 <div>
-                  <strong>전화</strong>
+                  <strong data-i18n="contact_tel">전화</strong>
                   <p>TEL 053-857-3541</p>
                 </div>
               </div>
@@ -938,7 +938,7 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
                 </div>
                 <div>
-                  <strong>팩스</strong>
+                  <strong data-i18n="contact_fax">팩스</strong>
                   <p>FAX 053-857-3543</p>
                 </div>
               </div>
@@ -947,7 +947,7 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 </div>
                 <div>
-                  <strong>이메일</strong>
+                  <strong data-i18n="contact_email">이메일</strong>
                   <p>kohips@naver.com</p>
                 </div>
               </div>
@@ -956,8 +956,8 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
                 <div>
-                  <strong>주소</strong>
-                  <p>경상북도 경산시 진량읍 공단9로 103<br>(신제리 527)</p>
+                  <strong data-i18n="contact_address">주소</strong>
+                  <p data-i18n-html="contact_address_val">경상북도 경산시 진량읍 공단9로 103<br>(신제리 527)</p>
                 </div>
               </div>
               <div class="contact-item">
@@ -965,8 +965,8 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
                 <div>
-                  <strong>업무 시간</strong>
-                  <p>월~금 09:00 - 18:00<br>(토, 일, 공휴일 휴무)</p>
+                  <strong data-i18n="contact_hours">업무 시간</strong>
+                  <p data-i18n-html="contact_hours_val">월~금 09:00 - 18:00<br>(토, 일, 공휴일 휴무)</p>
                 </div>
               </div>
             </div>
@@ -976,7 +976,7 @@
           <div class="contact-map">
             <iframe
               class="google-map-iframe"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.7!2d128.7800!3d35.8200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z6rSR7ISx67aA64+Z7Kec7IucIOq1rOyKpO2KuCDsp4DripQg6rSQ64W47ZmN6rO8IDEwMw!5e0!3m2!1sko!2skr!4v1680000000000"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.7!2d128.7800!3d35.8200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z6rSR7ISx67aB64+E7Kec7IucIOq1rOyKpO2KuCDsp4DripQg6rSQ64W47ZmN6rO8IDEwMw!5e0!3m2!1sko!2skr!4v1680000000000"
               width="100%"
               height="320"
               style="border:0; border-radius: 12px;"
@@ -994,7 +994,7 @@
                 data-lang-key="map_google"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Google 경로안내
+                <span data-i18n="map_google">Google 경로안내</span>
               </a>
               <a
                 href="https://map.naver.com/p/directions/-/14326500,4288000,코힙스테크//walk?c=15,0,0,0,dh"
@@ -1003,8 +1003,8 @@
                 class="map-btn map-btn-naver"
                 data-lang-key="map_naver"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                네이버 경로안내
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="map_naver">네이버 경로안내</span>
               </a>
               <a
                 href="https://map.kakao.com/link/to/코힙스테크,35.82,128.78"
@@ -1013,8 +1013,8 @@
                 class="map-btn map-btn-kakao"
                 data-lang-key="map_kakao"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-                카카오 경로안내
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="map_kakao">카카오 경로안내</span>
               </a>
             </div>
           </div>
@@ -1029,37 +1029,38 @@
       <div class="footer-top">
         <div class="footer-brand">
           <div class="footer-logo">KOHIPS</div>
-          <p class="footer-desc">국내 최초 H.I.P 처리 전문기업<br>코힙스테크</p>
+          <p class="footer-desc" data-i18n-html="footer_desc">국내 최초 H.I.P 처리 전문기업<br>코힙스테크</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
-            <h4>회사</h4>
-            <a href="#about">회사소개</a>
-            <a href="#about">연혁</a>
-            <a href="#about">인증서</a>
+            <h4 data-i18n="footer_company">회사</h4>
+            <a href="#about" data-i18n="footer_about">회사소개</a>
+            <a href="#about" data-i18n="footer_history">연혁</a>
+            <a href="#about" data-i18n="footer_certs">인증서</a>
           </div>
           <div class="footer-col">
-            <h4>기술</h4>
-            <a href="#hip">HIP 기술</a>
-            <a href="#atomize">가스 아토마이즈</a>
-            <a href="#equipment">보유장비</a>
+            <h4 data-i18n="footer_tech">기술</h4>
+            <a href="#hip" data-i18n="footer_hip">HIP 기술</a>
+            <a href="#atomize" data-i18n="footer_atomize">가스 아토마이즈</a>
+            <a href="#equipment" data-i18n="footer_equip">보유장비</a>
           </div>
           <div class="footer-col">
-            <h4>제품·문의</h4>
-            <a href="#products">생산품목</a>
-            <a href="#contact">견적 문의</a>
-            <a href="#news">뉴스</a>
+            <h4 data-i18n="footer_prod_contact">제품·문의</h4>
+            <a href="#products" data-i18n="footer_products">생산품목</a>
+            <a href="#contact" data-i18n="footer_contact">견적 문의</a>
+            <a href="#news" data-i18n="footer_news">뉴스</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 코힙스테크 KOHIPS TECH CO. All rights reserved.</p>
-        <p>경상북도 경산시 진량읍 공단9로 103 | TEL 053-857-3541 | FAX 053-857-3543 | kohips@naver.com</p>
+        <p data-i18n="footer_copyright">&copy; 2026 코힙스테크 KOHIPS TECH CO. All rights reserved.</p>
+        <p data-i18n="footer_info">경상북도 경산시 진량읍 공단9로 103 | TEL 053-857-3541 | FAX 053-857-3543 | kohips@naver.com</p>
       </div>
     </div>
   </footer>
 
   <script src="config.js"></script>
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
