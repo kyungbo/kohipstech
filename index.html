@@ -147,6 +147,14 @@
   <!-- ==================== HERO ==================== -->
   <section id="hero">
     <div class="hero-bg">
+      <picture class="hero-picture">
+        <source media="(max-width: 768px)"  srcset="assets/hero-mobile.webp"  type="image/webp">
+        <source media="(max-width: 768px)"  srcset="assets/hero-mobile.jpg"   type="image/jpeg">
+        <source media="(max-width: 1024px)" srcset="assets/hero-tablet.webp"  type="image/webp">
+        <source media="(max-width: 1024px)" srcset="assets/hero-tablet.jpg"   type="image/jpeg">
+        <source srcset="assets/hero-desktop.webp" type="image/webp">
+        <img src="assets/hero-desktop.jpg" alt="HIP processing chamber and global logistics" loading="eager" fetchpriority="high">
+      </picture>
       <canvas id="heroCanvas"></canvas>
     </div>
     <div class="hero-overlay"></div>
