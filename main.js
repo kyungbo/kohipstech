@@ -184,9 +184,9 @@ const counterObserver = new IntersectionObserver((entries) => {
         // easeOut
         const eased = 1 - Math.pow(1 - progress, 3);
         current = Math.floor(eased * target);
-        el.textContent = current.toLocaleString() + suffix;
+        el.textContent = current + suffix;
         if (progress < 1) requestAnimationFrame(updateCounter);
-        else el.textContent = target.toLocaleString() + suffix;
+        else el.textContent = target + suffix;
       }
       requestAnimationFrame(updateCounter);
       counterObserver.unobserve(el);
@@ -613,7 +613,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
       if (texts[key] != null) {
         el.dataset.suffix = texts[key];
         var count = el.dataset.count;
-        if (count) el.textContent = (+count).toLocaleString() + texts[key];
+        if (count) el.textContent = (+count) + texts[key];
       }
     });
 
