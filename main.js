@@ -613,7 +613,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
       if (texts[key] != null) {
         el.dataset.suffix = texts[key];
         var count = el.dataset.count;
-        if (count) el.textContent = (+count).toLocaleString() + texts[key];
+        if (count) el.textContent = (+count) + texts[key];
       }
     });
 
