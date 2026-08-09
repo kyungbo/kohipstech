@@ -1,0 +1,1179 @@
+<title>KOHIPS 원격 경영 지휘소</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ── Token system ── */
+:root {
+  --surface-page: #efeee9;
+  --surface-card: #f9f8f5;
+  --surface-chart: #f5f4f1;
+  --surface-inset: #eae9e4;
+  --ink-primary: #1a1a18;
+  --ink-secondary: #5e5d58;
+  --ink-muted: #8a8984;
+  --ink-faint: #b5b4ae;
+  --border: rgba(26,26,24,0.09);
+  --border-strong: rgba(26,26,24,0.18);
+  --accent: #2a5ea8;
+  --accent-wash: rgba(42,94,168,0.08);
+  /* Amoeba categorical (validated) */
+  --amoeba-1: #2a78d6; /* HIP */
+  --amoeba-2: #eb6834; /* 진공로 */
+  --amoeba-3: #1baf7a; /* 후가공 */
+  --amoeba-4: #eda100; /* 영업 */
+  --amoeba-5: #e87ba4; /* 구매/물류 */
+  --amoeba-6: #008300; /* 경영지원 */
+  /* Status (never themed) */
+  --status-good: #0ca30c;
+  --status-warn: #fab219;
+  --status-critical: #d03b3b;
+  --delta-up: #006300;
+  --delta-down: #c03030;
+  /* Chart chrome */
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  /* Misc */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-card: 0 1px 3px rgba(26,26,24,0.06), 0 0 0 1px var(--border);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-page: #0e0e0d;
+    --surface-card: #1c1c1a;
+    --surface-chart: #161615;
+    --surface-inset: #242422;
+    --ink-primary: #ededea;
+    --ink-secondary: #9b9a93;
+    --ink-muted: #7a7972;
+    --ink-faint: #4a4944;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --accent: #5b92d6;
+    --accent-wash: rgba(91,146,214,0.12);
+    --amoeba-1: #3987e5;
+    --amoeba-2: #d95926;
+    --amoeba-3: #199e70;
+    --amoeba-4: #c98500;
+    --amoeba-5: #d55181;
+    --amoeba-6: #008300;
+    --delta-up: #0ca30c;
+    --delta-down: #e66767;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--border);
+  }
+}
+:root[data-theme="dark"] {
+  --surface-page: #0e0e0d;
+  --surface-card: #1c1c1a;
+  --surface-chart: #161615;
+  --surface-inset: #242422;
+  --ink-primary: #ededea;
+  --ink-secondary: #9b9a93;
+  --ink-muted: #7a7972;
+  --ink-faint: #4a4944;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --accent: #5b92d6;
+  --accent-wash: rgba(91,146,214,0.12);
+  --amoeba-1: #3987e5;
+  --amoeba-2: #d95926;
+  --amoeba-3: #199e70;
+  --amoeba-4: #c98500;
+  --amoeba-5: #d55181;
+  --amoeba-6: #008300;
+  --delta-up: #0ca30c;
+  --delta-down: #e66767;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--border);
+}
+
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--surface-page);
+  color: var(--ink-primary);
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Layout shell ── */
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 16px 48px;
+}
+@media (min-width: 640px) { .shell { padding: 24px 24px 64px; } }
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.header-left { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--accent);
+  border-radius: 7px;
+  display: grid; place-items: center;
+  color: #fff; font-weight: 700; font-size: 13px;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--ink-primary);
+}
+.header-sub {
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.header-right {
+  display: flex; gap: 6px; align-items: center;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.badge--live {
+  background: rgba(12,163,12,0.1);
+  color: var(--status-good);
+}
+.badge--live::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--status-good);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Hero metric ── */
+.hero {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+.hero-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.hero-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hero-value {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--ink-primary);
+}
+@media (min-width: 640px) { .hero-value { font-size: 56px; } }
+.hero-unit {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: -0.3px;
+}
+.hero-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.hero-delta--up { color: var(--delta-up); }
+.hero-delta--down { color: var(--delta-down); }
+.hero-spark {
+  margin-top: 12px;
+  height: 36px;
+  width: 100%;
+}
+
+/* ── Stat tile row ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (min-width: 640px) {
+  .stat-row { grid-template-columns: repeat(4, 1fr); }
+}
+.stat-tile {
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 14px 16px;
+  min-width: 0;
+}
+.stat-tile__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stat-tile__value {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: var(--ink-primary);
+}
+.stat-tile__delta {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+.stat-tile__delta--good { color: var(--delta-up); }
+.stat-tile__delta--warn { color: var(--status-warn); }
+.stat-tile__delta--bad { color: var(--delta-down); }
+.stat-tile__status {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; margin-top: 2px;
+}
+.stat-tile__status--ok { color: var(--delta-up); }
+.stat-tile__status--warn { color: var(--status-warn); }
+
+/* ── Section card ── */
+.section-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.section-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+}
+.section-card__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--ink-primary);
+}
+.section-card__subtitle {
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.section-card__body {
+  padding: 0 20px 20px;
+}
+
+/* ── Amoeba ranking bars ── */
+.amoeba-list { display: flex; flex-direction: column; gap: 10px; }
+.amoeba-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .amoeba-row { grid-template-columns: 110px 1fr auto; }
+}
+.amoeba-row__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.amoeba-row__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.amoeba-row__bar-wrap {
+  height: 22px;
+  background: var(--surface-inset);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.amoeba-row__bar {
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.amoeba-row__bar[data-full="true"] { border-radius: 4px; }
+.amoeba-row__metrics {
+  text-align: right;
+  min-width: 100px;
+}
+.amoeba-row__value {
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-primary);
+  letter-spacing: -0.3px;
+}
+.amoeba-row__delta {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.delta--up { color: var(--delta-up); }
+.delta--down { color: var(--delta-down); }
+.delta--flat { color: var(--ink-muted); }
+
+/* ── Trend chart ── */
+.trend-chart-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.trend-chart-wrap canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+.trend-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0 0;
+}
+.trend-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+.trend-legend__line {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Split columns ── */
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (min-width: 640px) {
+  .split { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Alert feed ── */
+.alert-list { display: flex; flex-direction: column; gap: 8px; }
+.alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-inset);
+}
+.alert-item__stripe {
+  width: 3px;
+  align-self: stretch;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.alert-item__stripe--red { background: var(--status-critical); }
+.alert-item__stripe--yellow { background: var(--status-warn); }
+.alert-item__stripe--green { background: var(--status-good); }
+.alert-item__body { flex: 1; min-width: 0; }
+.alert-item__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+.alert-item__desc {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  margin-top: 1px;
+}
+.alert-item__time {
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Approval queue ── */
+.approval-list { display: flex; flex-direction: column; gap: 8px; }
+.approval-item {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-inset);
+}
+.approval-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.approval-item__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  flex: 1;
+  min-width: 0;
+}
+.approval-item__amount {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.approval-item__llm {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  background: var(--accent-wash);
+  border-radius: 4px;
+  border-left: 2px solid var(--accent);
+}
+.approval-item__llm strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+.approval-item__actions {
+  display: flex;
+  gap: 6px;
+}
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn--approve {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--approve:hover { opacity: 0.9; }
+.btn--reject {
+  background: var(--surface-card);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-strong);
+}
+.btn--reject:hover { background: var(--surface-inset); }
+.btn--done {
+  background: var(--surface-inset);
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+/* ── Amoeba detail cards ── */
+.amoeba-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (min-width: 640px) {
+  .amoeba-details { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 860px) {
+  .amoeba-details { grid-template-columns: repeat(3, 1fr); }
+}
+.amoeba-detail-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  border-top: 3px solid var(--amoeba-color, var(--accent));
+}
+.amoeba-detail-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.amoeba-detail-card__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+.amoeba-detail-card__count {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+.amoeba-detail-card__hero {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--ink-primary);
+  line-height: 1;
+}
+.amoeba-detail-card__unit {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.amoeba-detail-card__delta {
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+.amoeba-detail-card__spark {
+  margin-top: 10px;
+  height: 32px;
+  width: 100%;
+}
+.amoeba-detail-card__breakdown {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  padding: 2px 0;
+}
+.breakdown-row__label { color: var(--ink-secondary); }
+.breakdown-row__value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-primary);
+}
+
+/* ── Tooltip ── */
+.chart-tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--surface-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  padding: 8px 10px;
+  font-size: 11px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.12s;
+  max-width: 200px;
+}
+.chart-tooltip.visible { opacity: 1; }
+.chart-tooltip__date {
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 4px;
+}
+.chart-tooltip__row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 0;
+}
+.chart-tooltip__line {
+  width: 10px; height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.chart-tooltip__name {
+  color: var(--ink-secondary);
+  flex: 1;
+}
+.chart-tooltip__val {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-primary);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 24px 0 0;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.footer a { color: var(--accent); text-decoration: none; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+
+<!-- Tooltip element -->
+<div class="chart-tooltip" id="tooltip">
+  <div class="chart-tooltip__date" id="tooltip-date"></div>
+  <div id="tooltip-rows"></div>
+</div>
+
+<div class="shell">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark">K</div>
+      <div>
+        <div class="header-title">KOHIPS 원격 경영 지휘소</div>
+        <div class="header-sub">Remote Command Center</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="badge badge--live">운영 중</span>
+      <span class="header-sub">2026.08.09 08:00</span>
+    </div>
+  </header>
+
+  <!-- Hero: 전사 시간당 채산 -->
+  <section class="hero">
+    <div class="hero-label">전사 시간당 채산 · 時間当たり採算</div>
+    <div class="hero-row">
+      <span class="hero-value">32,400</span>
+      <span class="hero-unit">원/h</span>
+      <span class="hero-delta hero-delta--up">▲ +3.2% 전일 대비</span>
+    </div>
+    <canvas class="hero-spark" id="hero-spark"></canvas>
+  </section>
+
+  <!-- Stat tiles -->
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="stat-tile__label">생산 수율</div>
+      <div class="stat-tile__value">94.2%</div>
+      <div class="stat-tile__status stat-tile__status--ok">✓ 정상</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile__label">불량률</div>
+      <div class="stat-tile__value">1.8%</div>
+      <div class="stat-tile__status stat-tile__status--ok">✓ 기준 3% 이하</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile__label">설비 가동률</div>
+      <div class="stat-tile__value">97.1%</div>
+      <div class="stat-tile__status stat-tile__status--ok">✓ 정상</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile__label">결재 대기</div>
+      <div class="stat-tile__value">3<span style="font-size:14px;font-weight:600;color:var(--ink-muted)">건</span></div>
+      <div class="stat-tile__status stat-tile__status--warn">⚠ 처리 필요</div>
+    </div>
+  </div>
+
+  <!-- Amoeba ranking -->
+  <section class="section-card">
+    <div class="section-card__header">
+      <div>
+        <div class="section-card__title">아메바별 시간당 채산</div>
+        <div class="section-card__subtitle">소단위 독립채산제 · 전일 기준</div>
+      </div>
+    </div>
+    <div class="section-card__body">
+      <div class="amoeba-list" id="amoeba-ranking"></div>
+    </div>
+  </section>
+
+  <!-- Weekly trend -->
+  <section class="section-card">
+    <div class="section-card__header">
+      <div>
+        <div class="section-card__title">주간 채산 트렌드</div>
+        <div class="section-card__subtitle">최근 7일 시간당 채산 추이</div>
+      </div>
+    </div>
+    <div class="section-card__body">
+      <div class="trend-chart-wrap">
+        <canvas id="trend-chart" height="220"></canvas>
+      </div>
+      <div class="trend-legend" id="trend-legend"></div>
+    </div>
+  </section>
+
+  <!-- Split: Alerts + Approvals -->
+  <div class="split">
+    <!-- Alerts -->
+    <section class="section-card">
+      <div class="section-card__header">
+        <div class="section-card__title">이상 감지</div>
+      </div>
+      <div class="section-card__body">
+        <div class="alert-list">
+          <div class="alert-item">
+            <div class="alert-item__stripe alert-item__stripe--red"></div>
+            <div class="alert-item__body">
+              <div class="alert-item__title">HIP 2호기 압력 저하</div>
+              <div class="alert-item__desc">작업자 박OO 보고 — 압력 유지 시스템 점검 권장</div>
+            </div>
+            <div class="alert-item__time">08:30</div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-item__stripe alert-item__stripe--yellow"></div>
+            <div class="alert-item__body">
+              <div class="alert-item__title">후가공 아메바 채산 2일 연속 하락</div>
+              <div class="alert-item__desc">인코넬 후가공 불량 3건 → 재작업 발생. 절삭 공구 마모 점검 권장</div>
+            </div>
+            <div class="alert-item__time">08:00</div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-item__stripe alert-item__stripe--green"></div>
+            <div class="alert-item__body">
+              <div class="alert-item__title">진공로 1호기 정기점검 완료</div>
+              <div class="alert-item__desc">가스 아토마이저 정상 가동 확인</div>
+            </div>
+            <div class="alert-item__time">07:45</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Approvals -->
+    <section class="section-card">
+      <div class="section-card__header">
+        <div class="section-card__title">결재 대기</div>
+        <div class="section-card__subtitle">3건</div>
+      </div>
+      <div class="section-card__body">
+        <div class="approval-list" id="approval-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Amoeba detail cards -->
+  <section>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink-primary)">아메바 상세</div>
+        <div style="font-size:11px;color:var(--ink-muted)">각 아메바 채산 상세 및 비용 구조</div>
+      </div>
+    </div>
+    <div class="amoeba-details" id="amoeba-details"></div>
+  </section>
+
+  <footer class="footer">
+    KOHIPS Remote Command Center v2.0 · 이나모리 가즈오 아메바경영 기반<br>
+    <a href="https://project-dpe0o.vercel.app" target="_blank" rel="noopener">project-dpe0o.vercel.app</a> · 데이터 갱신: 매일 08:00
+  </footer>
+</div>
+
+<script>
+// ── Data ──
+const AMOEBAS = [
+  { name: 'HIP 처리', people: 10, value: 48200, delta: 5.1, color: '--amoeba-1',
+    week: [44100, 45300, 46200, 43800, 45500, 45800, 48200],
+    revenue: 12800000, cost: 8960000, hours: 80 },
+  { name: '진공로', people: 8, value: 35600, delta: 1.2, color: '--amoeba-2',
+    week: [34200, 35100, 34500, 36000, 35200, 35100, 35600],
+    revenue: 8540000, cost: 6260000, hours: 64 },
+  { name: '후가공', people: 8, value: 28900, delta: -2.3, color: '--amoeba-3',
+    week: [30100, 31200, 30400, 29200, 30000, 29600, 28900],
+    revenue: 6940000, cost: 5090000, hours: 64 },
+  { name: '영업', people: 6, value: 25100, delta: 0.5, color: '--amoeba-4',
+    week: [24500, 25200, 24800, 25000, 25300, 25000, 25100],
+    revenue: 4820000, cost: 3610000, hours: 48 },
+  { name: '구매/물류', people: 5, value: 22300, delta: -0.8, color: '--amoeba-5',
+    week: [23100, 22400, 23200, 22100, 23000, 22500, 22300],
+    revenue: 3560000, cost: 2670000, hours: 40 },
+  { name: '경영지원', people: 8, value: 18700, delta: 0.2, color: '--amoeba-6',
+    week: [18200, 19000, 18300, 18900, 18100, 18500, 18700],
+    revenue: 4490000, cost: 3300000, hours: 64 },
+];
+
+const HERO_WEEK = [29800, 30500, 30100, 31200, 31400, 31400, 32400];
+const DAYS = ['8/3', '8/4', '8/5', '8/6', '8/7', '8/8', '8/9'];
+
+const APPROVALS = [
+  { title: 'Ar가스 충전 발주', amount: 5000000, requester: '김OO (구매팀)',
+    llm: '전월 동일 단가. 현재 가동률 감안 시 적정 재고 확보를 위해 <strong>승인 권장</strong>' },
+  { title: '진공로 히터 교체', amount: 12000000, requester: '이OO (설비팀)',
+    llm: '전년 교체비 대비 8% 상승. 히터 수명 초과 → <strong>검토 필요</strong> (대안 견적 비교 권장)' },
+  { title: '사무용품 구매', amount: 300000, requester: '박OO (경영지원)',
+    llm: '통상적 월간 소모품 범위 이내. <strong>승인 권장</strong>' },
+];
+
+// ── Helpers ──
+function getColor(varName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+}
+function fmt(n) {
+  return n.toLocaleString('ko-KR');
+}
+function fmtAmount(n) {
+  if (n >= 10000000) return (n / 10000000).toFixed(0) + '만원';
+  if (n >= 10000) return fmt(Math.round(n / 10000)) + '만원';
+  return fmt(n) + '원';
+}
+function deltaClass(d) {
+  if (d > 0) return 'delta--up';
+  if (d < 0) return 'delta--down';
+  return 'delta--flat';
+}
+function deltaStr(d) {
+  const sign = d > 0 ? '+' : '';
+  return sign + d.toFixed(1) + '%';
+}
+function deltaArrow(d) {
+  if (d > 0.3) return '▲';
+  if (d < -0.3) return '▼';
+  return '→';
+}
+
+// ── Render amoeba ranking ──
+function renderRanking() {
+  const el = document.getElementById('amoeba-ranking');
+  const maxVal = Math.max(...AMOEBAS.map(a => a.value));
+  el.innerHTML = AMOEBAS.map((a, i) => {
+    const pct = (a.value / maxVal * 100).toFixed(1);
+    const color = getColor(a.color);
+    const full = pct > 99;
+    return `<div class="amoeba-row">
+      <div class="amoeba-row__name">
+        <span class="amoeba-row__dot" style="background:${color}"></span>
+        ${a.name}
+      </div>
+      <div class="amoeba-row__bar-wrap">
+        <div class="amoeba-row__bar" style="width:${pct}%;background:${color};opacity:0.82" data-full="${full}"></div>
+      </div>
+      <div class="amoeba-row__metrics">
+        <div class="amoeba-row__value">${fmt(a.value)}원</div>
+        <div class="amoeba-row__delta ${deltaClass(a.delta)}">${deltaArrow(a.delta)} ${deltaStr(a.delta)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Render approvals ──
+function renderApprovals() {
+  const el = document.getElementById('approval-list');
+  el.innerHTML = APPROVALS.map((ap, i) => `<div class="approval-item" id="approval-${i}">
+    <div class="approval-item__top">
+      <div class="approval-item__title">${ap.title}</div>
+      <div class="approval-item__amount">${fmtAmount(ap.amount)}</div>
+    </div>
+    <div class="approval-item__llm"><strong>LLM 검토</strong> ${ap.llm}</div>
+    <div class="approval-item__actions">
+      <button class="btn btn--approve" onclick="handleApproval(${i}, true)">승인</button>
+      <button class="btn btn--reject" onclick="handleApproval(${i}, false)">반려</button>
+    </div>
+  </div>`).join('');
+}
+
+function handleApproval(idx, approved) {
+  const card = document.getElementById(`approval-${idx}`);
+  const actions = card.querySelector('.approval-item__actions');
+  const label = approved ? '✓ 승인 완료' : '✕ 반려';
+  actions.innerHTML = `<button class="btn btn--done">${label}</button>`;
+  // Update counter
+  const counter = document.querySelector('.stat-tile:last-child .stat-tile__value');
+  const current = parseInt(counter.textContent);
+  if (current > 0) {
+    const next = current - 1;
+    counter.innerHTML = next + '<span style="font-size:14px;font-weight:600;color:var(--ink-muted)">건</span>';
+    if (next === 0) {
+      const status = document.querySelector('.stat-tile:last-child .stat-tile__status');
+      status.className = 'stat-tile__status stat-tile__status--ok';
+      status.textContent = '✓ 모두 처리';
+    }
+  }
+}
+
+// ── Render amoeba detail cards ──
+function renderDetails() {
+  const el = document.getElementById('amoeba-details');
+  el.innerHTML = AMOEBAS.map((a, i) => {
+    const color = getColor(a.color);
+    const profit = a.revenue - a.cost;
+    return `<div class="amoeba-detail-card" style="--amoeba-color:${color}">
+      <div class="amoeba-detail-card__head">
+        <div class="amoeba-detail-card__name">${a.name}</div>
+        <div class="amoeba-detail-card__count">${a.people}명</div>
+      </div>
+      <div class="amoeba-detail-card__hero">${fmt(a.value)}</div>
+      <span class="amoeba-detail-card__unit">원/h</span>
+      <div class="amoeba-detail-card__delta ${deltaClass(a.delta)}">${deltaArrow(a.delta)} ${deltaStr(a.delta)} 전일 대비</div>
+      <canvas class="amoeba-detail-card__spark" id="spark-${i}"></canvas>
+      <div class="amoeba-detail-card__breakdown">
+        <div class="breakdown-row"><span class="breakdown-row__label">매출</span><span class="breakdown-row__value">${fmtAmount(a.revenue)}</span></div>
+        <div class="breakdown-row"><span class="breakdown-row__label">경비</span><span class="breakdown-row__value">${fmtAmount(a.cost)}</span></div>
+        <div class="breakdown-row"><span class="breakdown-row__label">이익</span><span class="breakdown-row__value" style="color:${profit > 0 ? 'var(--delta-up)' : 'var(--delta-down)'}">${fmtAmount(profit)}</span></div>
+        <div class="breakdown-row"><span class="breakdown-row__label">총 노동시간</span><span class="breakdown-row__value">${a.hours}h</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Canvas: sparkline ──
+function drawSparkline(canvasId, data, color, fillAlpha) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = rect.height;
+  const pad = 4;
+  const min = Math.min(...data) * 0.97;
+  const max = Math.max(...data) * 1.03;
+  const range = max - min || 1;
+  const points = data.map((v, i) => ({
+    x: pad + (i / (data.length - 1)) * (w - pad * 2),
+    y: pad + (1 - (v - min) / range) * (h - pad * 2)
+  }));
+  // Fill
+  if (fillAlpha) {
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, h);
+    points.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.lineTo(points[points.length - 1].x, h);
+    ctx.closePath();
+    ctx.fillStyle = color.replace(')', `,${fillAlpha})`).replace('rgb', 'rgba');
+    // Fallback for hex
+    if (color.startsWith('#')) {
+      const r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16);
+      ctx.fillStyle = `rgba(${r},${g},${b},${fillAlpha})`;
+    }
+    ctx.fill();
+  }
+  // Line
+  ctx.beginPath();
+  points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.stroke();
+  // End dot with surface ring
+  const last = points[points.length - 1];
+  const surfaceColor = getColor('--surface-card');
+  ctx.beginPath();
+  ctx.arc(last.x, last.y, 5, 0, Math.PI * 2);
+  ctx.fillStyle = surfaceColor;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(last.x, last.y, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+// ── Canvas: trend chart with tooltip ──
+function drawTrendChart() {
+  const canvas = document.getElementById('trend-chart');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 220 * dpr;
+  canvas.style.height = '220px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = 220;
+  const padL = 50, padR = 16, padT = 12, padB = 28;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  // Compute scales
+  const allVals = AMOEBAS.flatMap(a => a.week);
+  const yMin = Math.floor(Math.min(...allVals) / 5000) * 5000;
+  const yMax = Math.ceil(Math.max(...allVals) / 5000) * 5000;
+  const yRange = yMax - yMin || 1;
+  const xStep = plotW / (DAYS.length - 1);
+  const toX = i => padL + i * xStep;
+  const toY = v => padT + (1 - (v - yMin) / yRange) * plotH;
+
+  // Grid
+  const gridColor = getColor('--grid');
+  const axisColor = getColor('--axis');
+  const mutedColor = getColor('--ink-muted');
+  const ticks = 5;
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.font = '11px system-ui, sans-serif';
+  for (let i = 0; i <= ticks; i++) {
+    const val = yMin + (yRange / ticks) * i;
+    const y = toY(val);
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(w - padR, y);
+    ctx.stroke();
+    ctx.fillStyle = mutedColor;
+    ctx.fillText(fmt(Math.round(val / 1000)) + 'K', padL - 6, y);
+  }
+  // Baseline
+  ctx.strokeStyle = axisColor;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(padL, padT + plotH);
+  ctx.lineTo(w - padR, padT + plotH);
+  ctx.stroke();
+  // X labels
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  DAYS.forEach((d, i) => {
+    ctx.fillStyle = mutedColor;
+    ctx.fillText(d, toX(i), padT + plotH + 8);
+  });
+
+  // Store point positions for tooltip
+  const chartPoints = [];
+  // Lines
+  AMOEBAS.forEach((a, ai) => {
+    const color = getColor(a.color);
+    const points = a.week.map((v, i) => ({ x: toX(i), y: toY(v), val: v }));
+    chartPoints.push({ name: a.name, color, points });
+    ctx.beginPath();
+    points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    // End dot
+    const last = points[points.length - 1];
+    const surfaceColor = getColor('--surface-card');
+    ctx.beginPath();
+    ctx.arc(last.x, last.y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = surfaceColor;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(last.x, last.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  });
+
+  // Tooltip interaction
+  const tooltip = document.getElementById('tooltip');
+  const tooltipDate = document.getElementById('tooltip-date');
+  const tooltipRows = document.getElementById('tooltip-rows');
+
+  canvas.addEventListener('pointermove', e => {
+    const cr = canvas.getBoundingClientRect();
+    const mx = e.clientX - cr.left;
+    // Find nearest day index
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+    DAYS.forEach((_, i) => {
+      const dist = Math.abs(mx - toX(i));
+      if (dist < nearestDist) { nearestDist = dist; nearestIdx = i; }
+    });
+    if (nearestDist > xStep * 0.6) {
+      tooltip.classList.remove('visible');
+      return;
+    }
+    // Draw crosshair
+    // (We redraw on every frame — acceptable for 7 points)
+    // For a production build you'd layer a separate canvas
+    tooltipDate.textContent = '2026.' + DAYS[nearestIdx];
+    tooltipRows.innerHTML = chartPoints.map(cp =>
+      `<div class="chart-tooltip__row">
+        <span class="chart-tooltip__line" style="background:${cp.color}"></span>
+        <span class="chart-tooltip__name">${cp.name}</span>
+        <span class="chart-tooltip__val">${fmt(cp.points[nearestIdx].val)}</span>
+      </div>`
+    ).join('');
+    tooltip.classList.add('visible');
+    // Position
+    let tx = e.clientX + 12;
+    let ty = e.clientY - 10;
+    if (tx + 200 > window.innerWidth) tx = e.clientX - 212;
+    if (ty + 180 > window.innerHeight) ty = e.clientY - 180;
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+  });
+  canvas.addEventListener('pointerleave', () => {
+    tooltip.classList.remove('visible');
+  });
+
+  // Legend
+  const legendEl = document.getElementById('trend-legend');
+  legendEl.innerHTML = AMOEBAS.map(a => {
+    const color = getColor(a.color);
+    return `<div class="trend-legend__item"><span class="trend-legend__line" style="background:${color}"></span>${a.name}</div>`;
+  }).join('');
+}
+
+// ── Init ──
+function init() {
+  renderRanking();
+  renderApprovals();
+  renderDetails();
+  // Hero sparkline
+  const accentColor = getColor('--accent');
+  drawSparkline('hero-spark', HERO_WEEK, accentColor, 0.1);
+  // Amoeba detail sparklines
+  AMOEBAS.forEach((a, i) => {
+    drawSparkline('spark-' + i, a.week, getColor(a.color), 0.12);
+  });
+  // Trend chart
+  drawTrendChart();
+}
+
+// Redraw on resize (debounced)
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(init, 150);
+});
+
+// Redraw on theme change
+const observer = new MutationObserver(() => setTimeout(init, 50));
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setTimeout(init, 50));
+
+// Go
+init();
+</script>
