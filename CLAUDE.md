@@ -69,6 +69,62 @@ kohips-website/
 - 백엔드 URL: `vercel.json`의 `rewrites[0].destination` 참고
 - 문의 이메일: `kohips@naver.com` (config.js COMPANY.email)
 
+## 원격 경영 지휘소 (Remote Command Center)
+
+CEO 원격 경영관리를 위한 대시보드 + 전자결재 시스템. `docs/` 디렉토리에 PRD와 프로토타입이 있다.
+
+### 파일
+
+```
+docs/
+├── PRD_Remote_Command_Center.md   # PRD v2.0 (아메바경영 반영)
+└── dashboard-prototype.html       # 인터랙티브 프로토타입 (GA4 포함)
+```
+
+### 프로토타입 URL
+
+- **Vercel**: https://project-dpe0o.vercel.app/docs/dashboard-prototype
+- git push → main → Vercel 자동 배포
+
+### 대시보드 구조
+
+3탭 액션 기반:
+- **현황**: 시간당 채산 히어로 + KPI + 아메바 랭킹 + 주간 트렌드 차트
+- **결재**: 모두싸인 스타일 전자서명 (서명/반려 인터랙션)
+- **알림**: 알림센터 (미확인/확인 필터, 개별/벌크 확인)
+
+### 아메바경영 적용
+
+이나모리 가즈오의 아메바경영 원칙을 기반으로, 45명 조직을 6개 아메바(HIP 처리, 진공로, 후가공, 영업, 구매/물류, 경영지원)로 편성. 핵심 지표는 시간당 채산 = (매출 - 경비) / 총 노동시간.
+
+### GA4 이벤트 (대시보드 전용)
+
+GA4 ID: `G-EQELRNXZBE` (메인 사이트 공용), 헬퍼: `ga(eventName, params)`
+
+| 이벤트 | 트리거 | 파라미터 |
+|--------|--------|----------|
+| `tab_view` | 탭 전환 | tab |
+| `approval_sign` | 전자서명 승인 | doc_title, doc_type, amount |
+| `approval_reject` | 반려 | doc_title, doc_type, amount |
+| `notif_ack` | 알림 개별 확인 | notif_title, severity, category |
+| `notif_ack_all` | 모두 확인 | count |
+| `notif_filter` | 알림 필터 변경 | filter |
+
+### 디자인 원칙
+
+- 일본어 표기 금지 (아메바경영 참조하되 한국어만 사용)
+- 컬러 절제: 모노크롬 베이스, 의미 있는 곳에만 색상
+- 아메바 6색 카테고리컬 팔레트 (CVD 검증 완료, 차트 내부에서만 사용)
+- 모바일 퍼스트 (max-width 520px, 하단 탭 내비게이션)
+
+### 다음 단계
+
+- [ ] CEO 리뷰 후 피드백 반영
+- [ ] 실제 데이터 연동 설계 (Power Automate + OneDrive 엑셀 → LLM → 대시보드)
+- [ ] 카카오톡 알림톡 API 연동 프로토타입
+- [ ] 사내매매가격 설정 UI
+- [ ] 아메바 리더 전용 뷰
+
 ## 배포 주의사항
 
 - `vercel.json` 수정 시 Railway 백엔드 URL 변경 여부 확인
