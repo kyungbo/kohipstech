@@ -1,5 +1,12 @@
 <title>KOHIPS 원격 경영 지휘소</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- GA4 -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());gtag('config','G-EQELRNXZBE',{page_title:'원격 경영 지휘소',page_path:'/docs/dashboard-prototype'});
+var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-EQELRNXZBE';document.head.appendChild(s);
+function ga(e,p){try{gtag('event',e,p||{})}catch(_){}}
+</script>
 <style>
 :root {
   --bg: #f3f2ed;
@@ -385,6 +392,7 @@ function switchTab(id,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   if(id==='overview')redrawCharts();
+  ga('tab_view',{tab:id});
 }
 
 // ── Overview page ──
@@ -513,6 +521,7 @@ function renderDocs(){
 }
 
 function signDoc(id){
+  const doc=DOCS.find(d=>d.id===id);
   const area=document.getElementById('signArea-'+id);
   const card=document.getElementById('doc-'+id);
   area.innerHTML=`<div class="sign-done">
@@ -522,6 +531,7 @@ function signDoc(id){
   </div>`;
   card.classList.add('signed');
   updateSignCount(-1);
+  ga('approval_sign',{doc_title:doc?doc.title:'',doc_type:doc?doc.type:'',amount:doc?doc.amount:0});
 }
 
 function rejectDoc(id){
@@ -546,6 +556,8 @@ function confirmReject(){
   </div>`;
   card.classList.add('signed');
   updateSignCount(-1);
+  const doc=DOCS.find(d=>d.id===id);
+  ga('approval_reject',{doc_title:doc?doc.title:'',doc_type:doc?doc.type:'',amount:doc?doc.amount:0});
   closeReject();
 }
 
@@ -596,18 +608,24 @@ function renderNotifs(){
 
 function ackNotif(id){
   const n=NOTIFS.find(x=>x.id===id);
-  if(n&&!n.read){n.read=true;updateUnread();}
+  if(n&&!n.read){
+    n.read=true;updateUnread();
+    ga('notif_ack',{notif_title:n.title,severity:n.sev,category:n.cat});
+  }
   renderNotifs();
 }
 function markAllRead(){
+  const cnt=NOTIFS.filter(n=>!n.read).length;
   NOTIFS.forEach(n=>n.read=true);
   updateUnread();renderNotifs();
+  ga('notif_ack_all',{count:cnt});
 }
 function filterNotif(f,btn){
   notifFilter=f;
   document.querySelectorAll('.notif-filter').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderNotifs();
+  ga('notif_filter',{filter:f});
 }
 function updateUnread(){
   const c=NOTIFS.filter(n=>!n.read).length;
